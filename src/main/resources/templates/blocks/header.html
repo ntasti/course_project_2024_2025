@@ -1,0 +1,102 @@
+
+<!--<div th:fragment="header" class="p-3 m-0 border-0 bd-example m-0 border-0">-->
+
+<!--    <nav class="navbar navbar-expand-lg bg-body-tertiary" >-->
+<!--        <div class="container-fluid" bis_skin_checked="1" style="background-color: #0c2636">-->
+<!--            <a class="navbar-brand" href="#"><font style="vertical-align: inherit;  ;"><font style="vertical-align: inherit;color: #fff;">TIME MANAGMENT</font></font></a>-->
+<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Переключить навигацию">-->
+<!--                <span class="navbar-toggler-icon"></span>-->
+<!--            </button>-->
+<!--            <div class="collapse navbar-collapse" id="navbarNavDropdown" bis_skin_checked="1">-->
+<!--                <ul class="navbar-nav">-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" aria-current="page" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: #fff;">Дом</font></font></a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: #fff;">Функции</font></font></a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit; color: #fff;">Ценообразование</font></font></a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item dropdown">-->
+<!--                        <a class="nav-link dropdown-toggle" style="color: #fff;" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><font style=" color: #fff;vertical-align: inherit;"><font style="vertical-align: inherit;">-->
+<!--                            Раскрывающаяся ссылка-->
+<!--                        </font></font></a>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <li><a class="dropdown-item" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Действие</font></font></a></li>-->
+<!--                            <li><a class="dropdown-item" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Другое действие</font></font></a></li>-->
+<!--                            <li><a class="dropdown-item" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Здесь есть еще кое-что</font></font></a></li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+
+<!--</div>-->
+<div th:fragment="header">
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top ">
+        <div class="container-fluid" bis_skin_checked="1" style="background-color: #0c2636">
+            <a class="navbar-brand" href="/" style="font-size: 1.2em;">
+                <font style="vertical-align: inherit;">
+                    <font class="nav-link" href="/schedule" style="vertical-align: inherit; margin-left: 1em;">TIME MANAGMENT</font>
+                </font>
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse" bis_skin_checked="1">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/schedule"><font style="vertical-align: inherit;"><font class="lead"
+                                                                                                          style="vertical-align: inherit;">Афиши</font></font></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cinema"><font style="vertical-align: inherit;"><font class="lead"
+                                                                                                        style="vertical-align: inherit;">Кинотеатры</font></font></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news"><font style="vertical-align: inherit;"><font class="lead"
+                                                                                                      style="vertical-align: inherit;">Новости</font></font></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/personal"><font style="vertical-align: inherit;"><font class="lead"
+                                                                                                          style="vertical-align: inherit;">Личный кабинет </font></font></a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  href="#"  data-bs-toggle="dropdown" ><font class="lead" style="vertical-align: inherit;">Раскрывающаяся ссылка </font></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Действие</font></font></a></li>
+                            <li><a class="dropdown-item" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Другое действие</font></font></a></li>
+                            <li><a class="dropdown-item" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Здесь есть еще кое-что</font></font></a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+                <!--                <div style="margin-right: 5px;">-->
+                <!--                    <form class="d-flex" role="search">-->
+                <!--                        <input class="form-control me-2 lead" type="search" placeholder="Поиск фильма" aria-label="Поиск">-->
+
+                <!--                        <a href="#" class="btn btn-outline-success" type="submit"><font-->
+                <!--                                style="vertical-align: inherit;"><font class="lead"-->
+                <!--                                style="vertical-align: inherit;" >Поиск </font></font></a>-->
+                <!--                    </form>-->
+                <!--                </div>-->
+
+                <form >
+                    <a href="/personal/inf" class="nav-link text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                             class="bi bi-person-fill" viewBox="0 0 16 16">
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                        </svg>
+                    </a>
+                </form>
+
+            </div>
+        </div>
+
+</nav>
+</div>
