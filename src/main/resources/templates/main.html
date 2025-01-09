@@ -32,10 +32,134 @@
             margin: 0;
             padding: 0;
         }
+        .content {
+    display: flex;
+    width: 100%;
+
+        .block-1{
+          width: 350px;
+          padding: 0px;
+    height: 1100px;
+    background-color: #dcdcde;
+    margin-top:39px;
+    text-align: center;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2); /* Тень вправо на блок 2 */
+    line-height: 20px;
+    position: relative; /* Устанавливаем для работы z-index */
+    z-index: 2; /* Помещаем блок выше */
+
+        }
+
+        .block-2 {
+          flex: 1; /* Этот блок займет оставшееся место */
+           background-color: white; /* Пример цвета для блока */
+           height: 1100px;
+            text-align: center;
+            padding: 70px; /* Добавляем отступы для содержания */
+           overflow: auto; /* Скроллинг, если контент превышает высоту */L
+        }
+
+        .animated-button:hover {
+    background-color:  #0c2636; /* Цвет фона при наведении */
+    color:white;
+
+}
+        .butt{
+    background-color: #dcdcde; /* Основной цвет кнопки */
+    color: black; /* Цвет текста */
+    border: 0;
+    float: left;
+    margin-left:0px;
+    width: 350px;
+    height: 50px;
+    font-size: 20px;
+        }
+    .butt-logout{
+    background-color:  #0c2636;
+    color:white;
+         margin-top:20px;
+          width: 350px;
+         height: 130px;
+        border: 0;
+        float: left;
+         margin-left:0px;
+        width: 350px;
+        height: 50px;
+         font-size: 20px;
+        }
+
+
+
     </style>
 <!--    <link rel="stylesheet" th:href="@{/css/header.css}">-->
 </head>
-<!--<body class="p-3 m-0 border-0 bd-example m-0 border-0">-->
+<body>
 <header th:insert="~{blocks/header :: header}"></header>
+
+<div class="content">
+    <div class="block-1">
+        <ul class="list-group">
+
+            <div class="block-inf">
+                <img src=" https://static.vecteezy.com/system/resources/thumbnails/039/191/209/small_2x/ai-generated-blurred-interior-of-modern-office-blur-background-business-concept-free-photo.jpeg" style=" width: 350px;
+         height: 130px;">
+            </div>
+
+
+            <form action="/" target="_blank">
+                <button class="butt animated-button"  style="vertical-align: inherit; text-align: left; ">Задачи</button>
+            </form>
+            <form action="/" target="_blank">
+                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Проекты</button>
+            </form>
+
+            <form action="/" target="_blank">
+                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Сотрудники</button>
+            </form>
+
+            <form action="/" target="_blank">
+                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Личная информация</button>
+            </form>
+
+            <form action="/" target="_blank">
+                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Отчёты</button>
+            </form>
+
+            <form action="/" target="_blank">
+                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Настройки</button>
+            </form>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <form action="/" target="_blank">
+                <button class="butt-logout" style="vertical-align: inherit; text-align: left; ">Выйти</button>
+            </form>
+
+<!--                <form action="/" target="_blank">-->
+<!--                    <button class="butt animated-button" ><center><u>Глава</u></center></button>-->
+<!--                </form>-->
+<!--                    <form action="/" target="_blank">-->
+<!--                <button class="butt animated-button" ><center>Глава</center></button>-->
+
+        </ul>
+    </div>
+    <div class="block-2">
+        <h1>Контент</h1>
+    </div>
+</div>
+
+
+
 </body>
 </html>
