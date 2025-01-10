@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 import java.util.ArrayList;
@@ -41,6 +42,30 @@ public class TaskController {
         taskInf.ifPresent(taskData::add);
         model.addAttribute("taskInf",taskData);
         return "task-inf";
+    }
+
+    @GetMapping("/task")
+    public String task( Model model){
+        Iterable<Task> task= taskRepository.findAll();//вытягивание всех строк из таблицы
+        model.addAttribute("taskData",task);
+        return "task";
+    }
+
+    @GetMapping("/task/search")
+    public String searchTasks(@RequestParam(value = "query", required = false) String query,Model model) {
+        List<Task> tasks;
+        // Проверяем, если поисковый запрос не пустой
+        if (query != null && !query.isEmpty()) {
+            // Выполняем поиск по имени задачи или имени проекта
+            tasks = taskRepository.findByNameContainingIgnoreCaseOrProject_NameContainingIgnoreCase(query, query);
+        } else {
+            // Если строка поиска пустая, возвращаем все задачи
+            tasks = taskRepository.findAll();
+        }
+        // Добавляем результат поиска в модель
+        model.addAttribute("taskData", tasks);
+        // Возвращаем имя шаблона, который будет отображать таблицу
+        return "task";
     }
 
 //    @GetMapping("/project/inf/{id}")
