@@ -53,6 +53,16 @@
            overflow: auto; /* Скроллинг, если контент превышает высоту */L
         }
 
+            .block-3{
+            margin-top:10px;
+             background-color: #dcdcde; /* Пример цвета для блока */
+             box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+            width: 750px;
+            height: 250px;
+            text-align: center;
+            border-radius:10px;
+            }
+
         .animated-button:hover {
     background-color:  #0c2636;
     color:white;
@@ -83,6 +93,28 @@ background-color:#f7f2f2;
          display: flex;
           margin: 0 auto;
         }
+
+.table {
+        width: 100%; /* Таблица занимает всю ширину */
+        border-collapse: collapse; /* Убираем границы между ячейками */
+        padding: 10px; /* Внутренний отступ */
+    }
+
+    .table td {
+        padding: 10px; /* Внутренние отступы для ячеек */
+    }
+
+    .table tr:not(:last-child) td {
+        border-bottom: 1px solid #ccc; /* Лёгкая разделительная линия между строками */
+    }
+
+    .table tr:last-child td {
+        border-bottom: none; /* Убираем границу у последней строки */
+    }
+
+    .tbl {
+        border: none; /* Убираем границы таблицы */
+    }
 
     </style>
 
@@ -139,6 +171,38 @@ background-color:#f7f2f2;
 
     <div class="block-2">
 
+
+<div th:each="el: ${projectDataByObject}">
+    <h2  th:text="'Информация по проекту №' + ${el.id}"></h2>
+            <table  class="table tbl" style="border-radius:10%;">
+                <tr>
+                    <td>Номер проета в базе данных:</td>
+                    <td th:text="${el.id}"></td>
+                </tr>
+                <tr>
+                    <td>Название проекта:</td>
+                    <td th:text="${el.name}"></td>
+                </tr>
+                <tr>
+                    <td>Дата создания:</td>
+                    <td th:text="${el.dateOfCreated}"></td>
+                </tr>
+                <tr>
+                    <td>Информация:</td>
+                    <td th:text="${el.inf}"></td>
+                </tr>
+                <tr>
+                    <td>Клиент:</td>
+                    <td th:text="${el.customerName}"></td>
+                </tr>
+                <tr>
+                    <td> Email:</td>
+                    <td th:text="${el.customerEmail}"></td>
+                </tr>
+            </table>
+
+
+</div>
 
     </div>
 </div>

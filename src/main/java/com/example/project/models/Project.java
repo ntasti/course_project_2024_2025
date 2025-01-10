@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +19,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    @Column(length = 3000)
     private String inf;
     private LocalDateTime dateOfCreated;
     private String customerName;

@@ -162,7 +162,7 @@ background-color: #827531; /* Основной цвет кнопки */
                 <div class="card-body">
                     <h5 th:text=${el.name} class="card-title"></h5>
                     <p  th:text=${el.inf} class="card-text"></p>
-                    <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: center;   width: 300px;  height: 50px; border-radius:5px;">Подробнее</a>
+                    <a th:href="'/project/inf/'+${el.id}" class=" btn  animated-button " style="vertical-align: inherit; text-align: center;   width: 300px;  height: 50px; border-radius:5px;">Подробнее</a>
                 </div>
                 </div>
                 <br>
