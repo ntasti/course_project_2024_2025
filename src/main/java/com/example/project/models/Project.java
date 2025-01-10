@@ -1,9 +1,7 @@
 package com.example.project.models;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,48 +11,32 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Table(name = "project")
 public class Project {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String inf;
     private LocalDateTime dateOfCreated;
+    private String customerName;
+    private String customerEmail;
 
-    public Long getId() {
-        return id;
+
+    @PrePersist
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Project(){
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public Project(String name, String inf,String customerName,String customerEmail) {
         this.name = name;
-    }
-
-    public String getInf() {
-        return inf;
-    }
-
-    public void setInf(String inf) {
         this.inf = inf;
+        this.customerName=customerName;
+        this.customerEmail=customerEmail;
     }
-
-    public LocalDateTime getDateOfCreated() {
-        return dateOfCreated;
-    }
-
-    public void setDateOfCreated(LocalDateTime dateOfCreated) {
-        this.dateOfCreated = dateOfCreated;
-    }
-//    @PrePersist
-//    private void init() {
-//        dateOfCreated = LocalDateTime.now();
-//    }
 
 }

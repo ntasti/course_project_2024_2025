@@ -60,11 +60,11 @@
         }
 
         .animated-button:hover {
-    background-color:  #0c2636; /* Цвет фона при наведении */
+    background-color:  #0c2636;
     color:white;
 
 }
-        .butt{
+        .btn{
     background-color: #dcdcde; /* Основной цвет кнопки */
     color: black; /* Цвет текста */
     border: 0;
@@ -73,89 +73,63 @@
     width: 350px;
     height: 50px;
     font-size: 20px;
+    border-radius: 0;
         }
-    .butt-logout{
-    background-color:  #0c2636;
-    color:white;
-         margin-top:20px;
-          width: 350px;
-         height: 130px;
-        border: 0;
-        float: left;
-         margin-left:0px;
-        width: 350px;
-        height: 50px;
-         font-size: 20px;
-        }
+
 
 
 
     </style>
-<!--    <link rel="stylesheet" th:href="@{/css/header.css}">-->
+
 </head>
 <body>
 <header th:insert="~{blocks/header :: header}"></header>
 
 <div class="content">
+
     <div class="block-1">
         <ul class="list-group">
 
             <div class="block-inf">
-                <br>
-                <br>
+
                 <img src=" https://static.vecteezy.com/system/resources/thumbnails/039/191/209/small_2x/ai-generated-blurred-interior-of-modern-office-blur-background-business-concept-free-photo.jpeg" style=" width: 350px;
          height: 130px;">
             </div>
 
+            <p>
+                <a href="/projects" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Проекты</a>
+            </p>
 
-            <form action="/" target="_blank">
-                <button class="butt animated-button"  style="vertical-align: inherit; text-align: left; ">Задачи</button>
-            </form>
-            <form action="/" target="_blank">
-                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Проекты</button>
-            </form>
+            <p>
+                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Задачи</a>
+            </p>
 
-            <form action="/" target="_blank">
-                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Сотрудники</button>
-            </form>
+            <p>
+                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Сотрудники</a>
+            </p>
 
-            <form action="/" target="_blank">
-                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Личная информация</button>
-            </form>
+            <p>
+                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Личная информация</a>
+            </p>
 
-            <form action="/" target="_blank">
-                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Отчёты</button>
-            </form>
+            <p>
+                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Отчёты</a>
+            </p>
 
-            <form action="/" target="_blank">
-                <button class="butt animated-button" style="vertical-align: inherit; text-align: left; ">Настройки</button>
-            </form>
+            <p>
+                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Настройки</a>
+            </p>
 
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
+            <p>
+                <a href="/" class=" btn   " style="vertical-align: inherit; text-align: left;  margin-top:110px;background-color:  #0c2636;
+    color:white;">Выйти</a>
+            </p>
 
-            <form action="/" target="_blank">
-                <button class="butt-logout" style="vertical-align: inherit; text-align: left; ">Выйти</button>
-            </form>
-
-<!--                <form action="/" target="_blank">-->
-<!--                    <button class="butt animated-button" ><center><u>Глава</u></center></button>-->
-<!--                </form>-->
-<!--                    <form action="/" target="_blank">-->
-<!--                <button class="butt animated-button" ><center>Глава</center></button>-->
-
+                  <div>
         </ul>
     </div>
+
+
     <div class="block-2">
         <h1>Контент</h1>
     </div>
