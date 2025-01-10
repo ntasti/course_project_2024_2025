@@ -25,15 +25,13 @@ public class TaskController {
 
 
     //вывод по опрделенному Id
-    @GetMapping("/task/{project}")
-    public String getTasksByProjectId(@PathVariable(value = "project") Long project, Model model) {
-        // Получаем задачи с сортировкой
-        List<Task> tasks = taskRepository.findAllByProjectIdOrderByDateOfCreatedAsc(project);
-
-        // Добавляем задачи в модель
+    @GetMapping("/task/{projectId}")
+    public String getTasksByProjectId(@PathVariable(value = "projectId") Long projectId, Model model) {
+        List<Task> tasks = taskRepository.findAllByProject_IdOrderByDateOfCreatedAsc(projectId);
         model.addAttribute("tasks", tasks);
         return "task-by-project";
     }
+
 
 
     @GetMapping("/task/inf/{id}")

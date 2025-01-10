@@ -9,5 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task,Long> {
-    List<Task> findAllByProjectIdOrderByDateOfCreatedAsc(Long projectId);
+    List<Task> findAllByProject_IdOrderByDateOfCreatedAsc(Long projectId);
+
 }
