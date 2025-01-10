@@ -152,7 +152,7 @@ background-color: #827531; /* Основной цвет кнопки */
                 <div class="card-header" style="background-color:#b8a33d">
                     <ul class="nav nav-tabs card-header-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" style="background-color:#0c2636; border-color:#0c2636; color:white;"  >Информация</a>
+                            <a  th:href="'/task/'+${el.id}" class="nav-link active" style="background-color:#0c2636; border-color:#0c2636; color:white;"  >Задачи</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"  style="  border-style: solid; background-color:#d6bf49;  color:white;" href="/project/create">Редактирование информации</a>
