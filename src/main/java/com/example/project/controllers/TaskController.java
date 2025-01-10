@@ -36,6 +36,14 @@ public class TaskController {
     }
 
 
+    @GetMapping("/task/inf/{id}")
+    public String ProjectsInf(@PathVariable(value = "id") long id, Model model){
+        Optional<Task> taskInf= taskRepository.findById(id);//вытягивание всех строк из таблицы
+        ArrayList<Task> taskData= new ArrayList<>();
+        taskInf.ifPresent(taskData::add);
+        model.addAttribute("taskInf",taskData);
+        return "task-inf";
+    }
 
 //    @GetMapping("/project/inf/{id}")
 //    public String ProjectsInf(@PathVariable(value = "id") long id, Model model){
