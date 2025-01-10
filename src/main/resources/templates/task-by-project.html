@@ -169,18 +169,34 @@ background-color:#f7f2f2;
     </div>
 
 
-    <div class="block-2">
+    <div class="block-2" >
+        <div  th:each="el : ${tasks}">
+            <br>
+        <div class="card text-center">
+            <div class="card-header" th:text="'Задача №' + ${el.id}" style="background-color:#0c2636; border-color:#0c2636; color:white;">
+            </div>
+            <div class="card-body">
 
-        <div th:each="el : ${tasks}">
-            <h2 th:text="'Задача №' + ${el.id}"></h2>
-            <h5 th:text="'Название: ' + ${el.name}"></h5>
-            <h5 th:text="'Приоритет: ' + ${el.priority}"></h5>
-            <h5 th:text="'Дата создания: ' + ${el.dateOfCreated}"></h5>
-            <h5 th:text="'Дата окончания: ' + ${el.dateOfEnd}"></h5>
+                <h5 class="card-title"  th:text=" ${el.name}"></h5>
+                <p class="card-text"  th:text=" ${el.inf}"></p>
+                <a href="'/" class=" btn  animated-button " style="vertical-align: inherit; text-align: center;   width: 300px;  height: 50px; border-radius:5px;">Подробнее</a>
+            </div>
+            <div class="card-footer t"   th:text=" ${el.dateOfEnd}" style="background-color:#b8a33d; color:white;">rrr
+
+            </div>
         </div>
-
+        </div>
     </div>
 </div>
+
+<!--        <div th:each="el : ${tasks}">-->
+<!--            <h2 th:text="'Задача №' + ${el.id}"></h2>-->
+<!--            <h5 th:text="'Название: ' + ${el.name}"></h5>-->
+<!--            <h5 th:text="'Приоритет: ' + ${el.priority}"></h5>-->
+<!--            <h5 th:text="'Дата создания: ' + ${el.dateOfCreated}"></h5>-->
+<!--            <h5 th:text="'Дата окончания: ' + ${el.dateOfEnd}"></h5>-->
+<!--        </div>-->
+
 
 
 
