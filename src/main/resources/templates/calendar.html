@@ -107,6 +107,67 @@
             }
 
 
+
+         body {
+            font-family: Arial, sans-serif;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin: 20px;
+        }
+        .day {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .day.today {
+            background-color: #a2d2ff;
+        }
+        .day:hover {
+            background-color: #f0f0f0;
+        }
+        .event {
+            background-color: #ffdd57;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        #eventModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px;
+        }
+        .controls button {
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
     </style>
 
 </head>
@@ -163,185 +224,135 @@
 
 
     <div class="block-2">
-<div class="main">
-    <div class="wrap">
-        <div class="left">
-            <div id="nav"></div>
-        </div>
-        <div class="right">
-            <div class="toolbar">
-                <button id="previous">Прошлый</button>
-                <button id="next">Следующий</button>
+        <div class="block-2">
+            <h1>Календарь</h1>
+            <div id="overlay"></div>
+            <div id="eventModal">
+                <h2>Events</h2>
+                <ul id="eventList"></ul>
+                <button onclick="closeModal()">Закрыть</button>
             </div>
-            <div id="dp"></div>
+
+            <div class="controls">
+                <button onclick="prevMonth()" style="background-color:#0c2636; color:white; border-radius:10px;">Предыдущий</button>
+                <h2 id="monthYear"></h2>
+                <button onclick="nextMonth()" style="background-color:#0c2636; color:white; border-radius:10px;">Следующий</button>
+            </div>
+
+            <div class="calendar" id="calendar"></div>
+
+            <!-- Thymeleaf Script for Passing Backend Data -->
+            <script th:inline="javascript">
+                const events = /*[[${tasksUser}]]*/ [];
+                const parsedEvents = {};
+
+                // Transform data into a calendar-readable format
+                events.forEach(task => {
+                    const assignmentDate = task.assignmentDate.split("T")[0]; // Extract date
+                    if (!parsedEvents[assignmentDate]) {
+                        parsedEvents[assignmentDate] = [];
+                    }
+                    parsedEvents[assignmentDate].push(task.task.name); // Add task name
+                });
+
+                const today = new Date();
+                let currentYear = today.getFullYear();
+                let currentMonth = today.getMonth();
+
+                function generateCalendar(year, month) {
+                    const calendar = document.getElementById("calendar");
+                    const monthYear = document.getElementById("monthYear");
+                    calendar.innerHTML = "";
+
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                    monthYear.textContent = new Date(year, month).toLocaleString("default", {
+                        month: "long",
+                        year: "numeric",
+                    });
+
+                    for (let i = 0; i < firstDay; i++) {
+                        const emptyDiv = document.createElement("div");
+                        calendar.appendChild(emptyDiv);
+                    }
+
+                    for (let day = 1; day <= daysInMonth; day++) {
+                        const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+                        const dayDiv = document.createElement("div");
+                        dayDiv.className = "day";
+                        dayDiv.textContent = day;
+
+                        if (date === `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`) {
+                            dayDiv.classList.add("today");
+                        }
+
+                        if (parsedEvents[date]) {
+                            parsedEvents[date].forEach(event => {
+                                const eventDiv = document.createElement("div");
+                                eventDiv.className = "event";
+                                eventDiv.textContent = event;
+                                dayDiv.appendChild(eventDiv);
+                            });
+                        }
+
+                        dayDiv.addEventListener("click", () => showEvents(date));
+                        calendar.appendChild(dayDiv);
+                    }
+                }
+
+                function showEvents(date) {
+                    const eventList = document.getElementById("eventList");
+                    eventList.innerHTML = "";
+
+                    if (parsedEvents[date]) {
+                        parsedEvents[date].forEach(event => {
+                            const li = document.createElement("li");
+                            li.textContent = event;
+                            eventList.appendChild(li);
+                        });
+                    } else {
+                        const li = document.createElement("li");
+                        li.textContent = "No events";
+                        eventList.appendChild(li);
+                    }
+
+                    document.getElementById("overlay").style.display = "block";
+                    document.getElementById("eventModal").style.display = "block";
+                }
+
+                function closeModal() {
+                    document.getElementById("overlay").style.display = "none";
+                    document.getElementById("eventModal").style.display = "none";
+                }
+
+                function prevMonth() {
+                    currentMonth--;
+                    if (currentMonth < 0) {
+                        currentMonth = 11;
+                        currentYear--;
+                    }
+                    generateCalendar(currentYear, currentMonth);
+                }
+
+                function nextMonth() {
+                    currentMonth++;
+                    if (currentMonth > 11) {
+                        currentMonth = 0;
+                        currentYear++;
+                    }
+                    generateCalendar(currentYear, currentMonth);
+                }
+
+                generateCalendar(currentYear, currentMonth);
+            </script>
         </div>
-    </div>
-</div>
     </div>
 
 <!-- DayPilot library -->
 <script src="../static/js/daypilot/daypilot-all.min.js"></script>
 
 <script>
-
-  const datePicker = new DayPilot.Navigator("nav", {
-    showMonths: 3,
-    skipMonths: 3,
-    selectMode: "Month",
-    onTimeRangeSelected: args => {
-      calendar.update({
-        startDate: args.day
-      });
-      calendar.events.load("/api/events");
-    }
-  });
-  datePicker.init();
-
-  const calendar = new DayPilot.Month("dp", {
-    eventEndSpec: "Date",
-    eventHeight: 30,
-    eventBarVisible: false,
-    onTimeRangeSelected: async (args) => {
-      const modal = await DayPilot.Modal.prompt("Create a new event:", "Event");
-      calendar.clearSelection();
-      if (modal.canceled) {
-        return;
-      }
-      const params = {
-        start: args.start,
-        end: args.end,
-        text: modal.result
-      };
-      const {data} = await DayPilot.Http.post('/api/events/create', params);
-      calendar.events.add(data);
-    },
-    onEventMove: async (args) => {
-        const params = {
-          id: args.e.id(),
-          start: args.newStart,
-          end: args.newEnd
-        };
-        const {data} = await DayPilot.Http.post('/api/events/move', params);
-    },
-    onEventResize: async (args) => {
-        const params = {
-          id: args.e.id(),
-          start: args.newStart,
-          end: args.newEnd
-        };
-        const {data} = await DayPilot.Http.post('/api/events/move', params);
-    },
-    onBeforeEventRender: args => {
-      const color = args.data.color || app.colors.gray;
-      args.data.backColor = color;
-      args.data.borderColor = "darker";
-      args.data.fontColor = "#ffffff";
-      args.data.areas = [
-        {
-          top: 6,
-          right: 6,
-          width: 18,
-          height: 18,
-          symbol: "../icons/daypilot.svg#minichevron-down-2",
-          action: "ContextMenu",
-          backColor: "#ffffff",
-          fontColor: "#666666",
-          style: "border: 1px solid #ccc; cursor:pointer; border-radius: 15px;"
-        }
-      ];
-    },
-    contextMenu: new DayPilot.Menu({
-      items: [
-        {
-          text: "Delete",
-          onClick: async (args) => {
-            const e = args.source;
-            const params = {
-              id: e.id()
-            };
-
-            const {data} = await DayPilot.Http.post('/api/events/delete', params);
-            calendar.events.remove(e);
-          }
-        },
-        {
-          text: "-"
-        },
-        {
-          text: "Blue",
-          icon: "icon icon-blue",
-          onClick: (args) => {
-            app.updateColor(args.source, app.colors.blue);
-          }
-        },
-        {
-          text: "Green",
-          icon: "icon icon-green",
-          onClick: (args) => {
-            app.updateColor(args.source, app.colors.green);
-          }
-        },
-        {
-          text: "Yellow",
-          icon: "icon icon-yellow",
-          onClick: (args) => {
-            app.updateColor(args.source, app.colors.yellow);
-          }
-        },
-        {
-          text: "Red",
-          icon: "icon icon-red",
-          onClick: (args) => {
-            app.updateColor(args.source, app.colors.red);
-          }
-        }, {
-          text: "Auto",
-          onClick: (args) => {
-            app.updateColor(args.source, "auto");
-          }
-        },
-
-      ]
-    })
-  });
-  calendar.init();
-
-  const app = {
-    colors: {
-      blue: "#2e78d6",
-      green: "#6aa84f",
-      yellow: "#efb914",
-      red: "#cc4125",
-      gray: "#808080",
-    },
-    elements: {
-      previous: document.querySelector("#previous"),
-      next: document.querySelector("#next"),
-    },
-    async updateColor(e, color) {
-      const params = {
-        id: e.id(),
-        color: color
-      };
-      const {data} = await DayPilot.Http.post('/api/events/setColor', params);
-      e.data.color = color;
-      calendar.events.update(e);
-    },
-    init() {
-      app.elements.previous.addEventListener("click", () => {
-        const current = datePicker.selectionDay;
-        datePicker.select(current.addMonths(-1));
-      });
-      app.elements.next.addEventListener("click", () => {
-        const current = datePicker.selectionDay;
-        datePicker.select(current.addMonths(1));
-      });
-
-      calendar.events.load("/api/events");
-    }
-  };
-
-  app.init();
 
 </script>
 

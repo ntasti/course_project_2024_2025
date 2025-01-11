@@ -178,8 +178,8 @@ background-color: #827531; /* Основной цвет кнопки */
                 <div class="col-md-6">
                     <div class="search-container">
                         <form action="/task/search" method="get">
-                        <input  name="query" type="text" class="form-control search-input" placeholder="Поиск...">
-                        <i  type="submit" class="fas fa-search search-icon"></i>
+                            <input  name="query" type="text" class="form-control search-input" placeholder="Поиск...">
+                            <i  type="submit" class="fas fa-search search-icon"></i>
                         </form>
                     </div>
                 </div>
@@ -191,19 +191,19 @@ background-color: #827531; /* Основной цвет кнопки */
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Проект</th>
-                    <th scope="col">Название задачи</th>
-                    <th scope="col">Дата заведения</th>
-                    <th scope="col">Инф</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Должность</th>
+                    <th scope="col">email</th>
                 </tr>
                 </thead>
-                <tbody th:each="el : ${taskData}">
+                <tbody th:each="el : ${users}">
                 <tr>
                     <th scope="row" th:text="${el.id}"></th>
-                    <td th:text="${el.project.name}"></td>
                     <td th:text="${el.name}"></td>
-                    <td th:text="${el.dateOfCreated}"></td>
-                    <td><a th:href="@{'/task/inf/' + ${el.id}}" style="color:grey;">Подробнее</a></td>
+                    <td th:text="${el.lastName}"></td>
+                    <td th:text="${el.position}"></td>
+                    <td th:text="${el.email}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -216,8 +216,8 @@ background-color: #827531; /* Основной цвет кнопки */
 
 </div>
 
-    <!-- FOOTER -->
-    <div th:insert="~{blocks/footer :: footer}"></div>
+<!-- FOOTER -->
+<div th:insert="~{blocks/footer :: footer}"></div>
 
 </body>
 </html>
