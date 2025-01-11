@@ -160,8 +160,12 @@ background-color:#f7f2f2;
             </p>
 
             <p>
-                <a href="/" class=" btn   " style="vertical-align: inherit; text-align: left;  margin-top:110px;background-color:  #0c2636;
-    color:white;">Выйти</a>
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                <button type="submit" class="btn" style="background-color: #0c2636; color: white;text-align: left;">
+                    Выйти
+                </button>
+            </form>
             </p>
 
             <div>
@@ -208,6 +212,7 @@ background-color:#f7f2f2;
 </div>
 
 
-
+<!-- FOOTER -->
+<div th:insert="~{blocks/footer :: footer}"></div>
 </body>
 </html>

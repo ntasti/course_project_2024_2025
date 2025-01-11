@@ -19,6 +19,7 @@ public class Task {
     private String name;
      private String inf;
      private String priority;
+    private String status;
      private LocalDateTime dateOfCreated;
      private Date dateOfEnd;
     @ManyToOne
@@ -34,6 +35,7 @@ public class Task {
         this.dateOfCreated = dateOfCreated;
         this.dateOfEnd = dateOfEnd;
         this.project = project;
+        this.status = status;
     }
     public Task(){}
 }
