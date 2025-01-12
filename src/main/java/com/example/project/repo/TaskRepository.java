@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface TaskRepository extends JpaRepository<Task,Long> {
     List<Task> findAllByProject_IdOrderByDateOfCreatedAsc(Long projectId);
     List<Task> findByNameContainingIgnoreCaseOrProject_NameContainingIgnoreCase(String name, String projectName);
-
+    List<Task> findByProjectId(Long projectId);
 }

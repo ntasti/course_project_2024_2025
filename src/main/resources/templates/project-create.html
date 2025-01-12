@@ -127,12 +127,14 @@ background-color:#f7f2f2;
 
             <p>
                 <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Настройки</a>
+                <input type="hidden" name="_csrf" value="${_csrf.token} ">
             </p>
 
             <p>
             <form th:action="@{/logout}" method="post">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-                <button type="submit" class="btn" style="background-color: #0c2636; color: white;text-align: left;">
+            <input type="hidden" name="_csrf" value="${_csrf.token} ">
+            <button type="submit" class="btn" style="background-color: #0c2636; color: white;text-align: left;">
                     Выйти
                 </button>
             </form>
@@ -154,6 +156,9 @@ background-color:#f7f2f2;
         <center>
             <div>
                 <form action="/project/create" method="post">
+                    <!-- CSRF токен -->
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+
                     <input type="text" name="name" placeholder="Введите название проекта" class="form-control"
                            style="width: 300px;">
                     <br>
@@ -169,15 +174,14 @@ background-color:#f7f2f2;
                     <textarea class="form-control" placeholder="Контактная информация заказчика:email" name="customerEmail"
                               style="height:200px; width:400px;"></textarea>
                     <br>
+
                     <div>
                         <p>
-                            <button type="submit"  class=" btn  animated-button " style="vertical-align: inherit;  border-radius: 10px; text-align:center ; text-align:center;
-                            transition: all 0.3s ease-in-out;width: 350px;height: 50px;font-size: 20px;">Создать проект</button>
+                            <button type="submit" class="btn animated-button" style="vertical-align: inherit; border-radius: 10px; text-align:center;
+                    transition: all 0.3s ease-in-out; width: 350px; height: 50px; font-size: 20px;">Создать проект</button>
                         </p>
-
                     </div>
-                </form> <!--  страничка на которой будет происходить обработка формы -->
-
+                </form>
             </div>
         </center>
 

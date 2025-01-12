@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Data
@@ -21,8 +23,11 @@ public class TasksUser {
     @ManyToOne
     @JoinColumn(name = "task_id", referencedColumnName = "id")
     private Task task;
+    @Temporal(TemporalType.DATE)
+    private Date assignmentDate;
+    @Temporal(TemporalType.DATE)
+    private Date DateOfTheEnd;
 
-    private LocalDateTime assignmentDate;
 
     // Default constructor (required by Hibernate)
     public TasksUser() {
