@@ -1,29 +1,22 @@
 package com.example.project.controllers;
 
-import com.example.project.models.Project;
-import com.example.project.models.Task;
-import com.example.project.models.TasksUser;
-import com.example.project.models.User;
-import com.example.project.repo.ProjectRepository;
-import com.example.project.repo.TaskRepository;
-import com.example.project.repo.TasksUserRepository;
-import com.example.project.repo.UserRepository;
+import com.example.project.models.*;
+import com.example.project.repo.*;
 import com.example.project.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -89,5 +82,16 @@ public class AdminController {
     public List<Task> getTasksByProject(@RequestParam Long projectId) {
         return taskRepository.findByProjectId(projectId);
     }
+
+    @Autowired
+    private DayTypeRepository dayTypeRepository;
+
+    @Autowired
+    private WorkScheduleRepository workScheduleRepository;
+
+
+
+
+
 
 }
