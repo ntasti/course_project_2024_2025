@@ -4,6 +4,8 @@ import com.example.project.models.User;
 import com.example.project.models.WorkSchedule;
 import com.example.project.repo.WorkScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +19,20 @@ public class WorkScheduleService {
 
     private final WorkScheduleRepository workScheduleRepository;
 
+
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    public void updateTableStructure() {
+        String alterTableQuery = """
+            ALTER TABLE work_schedule
+            CHANGE week_end week_end DATE NOT NULL,
+            CHANGE week_start week_start DATE NOT NULL;
+        """;
+        jdbcTemplate.execute(alterTableQuery);
+        System.out.println("Table structure updated successfully!");
+    }
 
 
     public List<WorkSchedule> getGroupedWorkSchedules() {

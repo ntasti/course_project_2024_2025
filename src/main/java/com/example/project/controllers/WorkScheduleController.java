@@ -94,6 +94,9 @@ public class WorkScheduleController {
     @PostMapping("/schedule/create")
     public String saveWorkSchedule(
             @RequestParam Long userId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekStart, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekEnd, @RequestParam Long weekId, @RequestParam Long dayTypeId, Model model) {
+        // Выполняем запрос ALTER TABLE
+        workScheduleService.updateTableStructure();
+
         // 1) Ищем user
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -119,6 +122,8 @@ public class WorkScheduleController {
 
         return "redirect:/schedule"; // или куда вам нужно
     }
+
+
 
 
 
