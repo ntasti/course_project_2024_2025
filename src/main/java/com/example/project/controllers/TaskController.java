@@ -34,25 +34,24 @@ public class TaskController {
     }
 
 
-
     @GetMapping("/task/inf/{id}")
-    public String ProjectsInf(@PathVariable(value = "id") long id, Model model){
-        Optional<Task> taskInf= taskRepository.findById(id);//вытягивание всех строк из таблицы
-        ArrayList<Task> taskData= new ArrayList<>();
+    public String ProjectsInf(@PathVariable(value = "id") long id, Model model) {
+        Optional<Task> taskInf = taskRepository.findById(id);//вытягивание всех строк из таблицы
+        ArrayList<Task> taskData = new ArrayList<>();
         taskInf.ifPresent(taskData::add);
-        model.addAttribute("taskInf",taskData);
+        model.addAttribute("taskInf", taskData);
         return "task-inf";
     }
 
     @GetMapping("/task")
-    public String task( Model model){
-        Iterable<Task> task= taskRepository.findAll();//вытягивание всех строк из таблицы
-        model.addAttribute("taskData",task);
+    public String task(Model model) {
+        Iterable<Task> task = taskRepository.findAll();//вытягивание всех строк из таблицы
+        model.addAttribute("taskData", task);
         return "task";
     }
 
     @GetMapping("/task/search")
-    public String searchTasks(@RequestParam(value = "query", required = false) String query,Model model) {
+    public String searchTasks(@RequestParam(value = "query", required = false) String query, Model model) {
         List<Task> tasks;
         // Проверяем, если поисковый запрос не пустой
         if (query != null && !query.isEmpty()) {
@@ -68,38 +67,11 @@ public class TaskController {
         return "task";
     }
 
-//    @GetMapping("/project/inf/{id}")
-//    public String ProjectsInf(@PathVariable(value = "id") long id, Model model){
-//        Optional<Project> projectDataByObject= projectRepository.findById(id);//вытягивание всех строк из таблицы
-//        ArrayList<Project> projectData= new ArrayList<>();
-//        projectDataByObject.ifPresent(projectData::add);
-//        model.addAttribute("projectDataByObject",projectData);
-//        return "project-inf";
-//    }
-//    @Autowired
-//    private ProjectRepository projectRepository;
-//    //общая информация
-//    @GetMapping("/projects")
-//    public String allProjectsInf(Model model){
-//        Iterable<Project> projectsData= projectRepository.findAll();//вытягивание всех строк из таблицы
-//        model.addAttribute("projectData",projectsData);
-//        return "projects";
-//    }
-//
-//    //добавление информации
-//    @GetMapping("/project/create")
-//    public String newProjectsCreate(Model model){
-//        return "project-create";
-//    }
-//
-//
-//    @PostMapping("/project/create")
-//    public String newProjects(@RequestParam String name, @RequestParam String inf, @RequestParam String customerName, @RequestParam String customerEmail, Model model){
-//        Project project;
-//        project = new Project(name, inf, customerName,customerEmail);
-//        projectRepository.save(project);//сохранение объекта в бд
-//        return "redirect:/projects";
-//    }
-//
+
+    @Autowired
+    private ProjectRepository projectRepository;
+
+
+
 
 }

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
@@ -53,16 +55,6 @@
            overflow: auto; /* Скроллинг, если контент превышает высоту */L
         }
 
-            .block-3{
-            margin-top:10px;
-             background-color: #dcdcde; /* Пример цвета для блока */
-             box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
-            width: 750px;
-            height: 250px;
-            text-align: center;
-            border-radius:10px;
-            }
-
         .animated-button:hover {
     background-color:  #0c2636;
     color:white;
@@ -94,29 +86,8 @@ background-color:#f7f2f2;
           margin: 0 auto;
         }
 
-.table {
-        width: 100%; /* Таблица занимает всю ширину */
-        border-collapse: collapse; /* Убираем границы между ячейками */
-        padding: 10px; /* Внутренний отступ */
-    }
-
-    .table td {
-        padding: 10px; /* Внутренние отступы для ячеек */
-    }
-
-    .table tr:not(:last-child) td {
-        border-bottom: 1px solid #ccc; /* Лёгкая разделительная линия между строками */
-    }
-
-    .table tr:last-child td {
-        border-bottom: none; /* Убираем границу у последней строки */
-    }
-
-    .tbl {
-        border: none; /* Убираем границы таблицы */
-    }
-
     </style>
+
 
 </head>
 <body>
@@ -140,7 +111,7 @@ background-color:#f7f2f2;
             </p>
 
             <p>
-                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Задачи</a>
+                <a href="/task" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Задачи</a>
             </p>
 
             <p>
@@ -148,7 +119,7 @@ background-color:#f7f2f2;
             </p>
 
             <p>
-                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Личная информация</a>
+                <a href="/personal/inf" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Личная информация</a>
             </p>
 
             <p>
@@ -157,11 +128,13 @@ background-color:#f7f2f2;
 
             <p>
                 <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Настройки</a>
+                <input type="hidden" name="_csrf" value="${_csrf.token} ">
             </p>
 
             <p>
             <form th:action="@{/logout}" method="post">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                <input type="hidden" name="_csrf" value="${_csrf.token} ">
                 <button type="submit" class="btn" style="background-color: #0c2636; color: white;text-align: left;">
                     Выйти
                 </button>
@@ -173,56 +146,84 @@ background-color:#f7f2f2;
     </div>
 
 
+
     <div class="block-2">
 
 
-        <div th:each="el: ${taskInf}">
-            <h2  th:text="'Информация по задаче №' + ${el.id}"></h2>
-            <table  class="table tbl" style="border-radius:10%;">
-                <tr>
-                    <td>Название проекта:</td>
-                    <td th:text="${el.project.name}"></td>
-                </tr>
-                <tr>
-                    <td>Номер задачи в базе данных:</td>
-                    <td th:text="${el.id}"></td>
-                </tr>
-
-                <tr>
-                    <td>Название задачи:</td>
-                    <td th:text="${el.name}"></td>
-                </tr>
-                <tr>
-                    <td>Дата создания:</td>
-                    <td th:text="${el.dateOfCreated}"></td>
-                </tr>
-                <tr>
-                    <td>Дата завершения:</td>
-                    <td th:text="${el.dateOfEnd}"></td>
-                </tr>
-                <tr>
-                    <td>Приорететность:</td>
-                    <td th:text="${el.priority}"></td>
-                </tr>
-                <tr>
-                    <td>Информация:</td>
-                    <td th:text="${el.inf}"></td>
-                </tr>
-                <tr>
-                    <td>Статус:</td>
-                    <td th:text="${el.status.name}"></td>
-                </tr>
-
-            </table>
 
 
-        </div>
+        <h3 class="text-center">Создание задачи</h3>
+        <br>
+
+        <form action="/task/create" method="post">
+            <!-- CSRF Token -->
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+<center><div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dateOfCreatedField = document.getElementById("dateOfCreated");
+
+            // Получаем текущую дату и время
+            const now = new Date();
+
+            // Форматируем в ISO строку: yyyy-MM-ddTHH:mm:ss
+            const formattedDateTime = now.toISOString().slice(0, 19);
+
+            // Устанавливаем значение в поле
+            dateOfCreatedField.value = formattedDateTime;
+        });
+    </script>
+
+    <!-- Проект -->
+    <div class="mb-3">
+        <select style="width: 350px;" id="project_id" name="project" class="form-control" required>
+            <option value="" disabled selected>Выберите проект</option>
+            <option th:each="project : ${project}" th:value="${project.id}" th:text="${project.name}"></option>
+        </select>
     </div>
+
+    <!-- Название задачи -->
+            <div class="mb-3">
+                <input type="text" style="width: 350px;" id="name" name="name" class="form-control" placeholder="Название задачи" required />
+            </div>
+
+            <!-- Описание задачи -->
+            <div class="mb-3">
+                <textarea id="inf" style="width: 350px;" name="inf" class="form-control" rows="3" placeholder="Описание задачи" required></textarea>
+            </div>
+
+            <!-- Приоритет -->
+            <div class="mb-3">
+                <label for="priority" class="form-label">Приоритет</label>
+                <select style="width: 350px;"  id="priority" name="priority" class="form-control"  required>
+                    <option value="Высокий">Высокий</option>
+                    <option value="Средний">Средний</option>
+                    <option value="Низкий">Низкий</option>
+                </select>
+            </div>
+
+
+            <!-- Дата окончания -->
+            <div class="mb-3">
+                <label for="dateOfEnd" class="form-label">Дата окончания</label>
+                <input type="date" id="dateOfEnd" name="dateOfEnd" class="form-control" style="width: 220px;" required>
+            </div>
+    <div class="mb-3">
+
+        <input type="hidden" id="dateOfCreated" name="dateOfCreated" class="form-control" style="width: 220px;" required>
+    </div>
+
+
+
+            <input type="hidden" name="status" value="1">
+</div></center>
+
+            <!-- Кнопка отправки -->
+            <button style="width:400px;" type="submit" class="btn btn-primary" datatype="border-radius:10%;">Создать задачу</button>
+        </form>
     </div>
 </div>
 
-
-<!-- FOOTER -->
-<div th:insert="~{blocks/footer :: footer}"></div>
 </body>
 </html>

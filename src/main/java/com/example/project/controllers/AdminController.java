@@ -33,7 +33,8 @@ public class AdminController {
     public UserRepository userRepository;
 
     @PostMapping("/usertasks/create")
-    public String newUserTask(@RequestParam Long projectId, @RequestParam Long taskId, @RequestParam Long userId, @RequestParam String assignmentDate, @RequestParam String dateOfTheEnd) throws ParseException {
+    public String newUserTask(@RequestParam Long projectId, @RequestParam Long taskId,
+                              @RequestParam Long userId, @RequestParam String assignmentDate, @RequestParam String dateOfTheEnd) throws ParseException {
 
         // Получаем сущности по идентификаторам
         Project project = projectRepository.findById(projectId)
@@ -58,7 +59,7 @@ public class AdminController {
         // Сохраняем в базу данных
         adminService.newUserTask(tasksUser);
 
-        return "redirect:/";
+        return "redirect:/calendar";
     }
 
 
@@ -89,9 +90,21 @@ public class AdminController {
     @Autowired
     private WorkScheduleRepository workScheduleRepository;
 
+    @GetMapping("/task/create")
+    public String newTask(Model model) {
 
+        Iterable<Project> projectsData = projectRepository.findAll();//вытягивание всех строк из таблицы
+        model.addAttribute("project", projectsData);
 
+        return "task-create";
 
+    }
+
+    @PostMapping("/task/create")
+    public String TaskCreate(Task task) {
+        adminService.createSession(task);
+        return "redirect:/task";
+    }
 
 
 }
