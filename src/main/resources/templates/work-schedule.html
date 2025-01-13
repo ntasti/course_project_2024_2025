@@ -235,44 +235,48 @@
 
     <div class="block-2">
         <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Сотрудник</th>
-                <th>Неделя (начало)</th>
-                <th>Неделя (конец)</th>
-                <th>Понедельник</th>
-                <th>Вторник</th>
-                <th>Среда</th>
-                <th>Четверг</th>
-                <th>Пятница</th>
-                <th>Суббота</th>
-                <th>Воскресение</th>
-            </tr>
-            </thead>
+    <thead>
+    <tr>
+        <th>Сотрудник</th>
+        <th>Неделя (начало)</th>
+        <th>Неделя (конец)</th>
+        <th>Понедельник</th>
+        <th>Вторник</th>
+        <th>Среда</th>
+        <th>Четверг</th>
+        <th>Пятница</th>
+        <th>Суббота</th>
+        <th>Воскресенье</th>
+        <th>Рабочие часы</th>
+    </tr>
+    </thead>
             <tbody>
-            <tr th:each="schedule : ${workSchedules}">
-                <!-- Employee name -->
-                <td th:text="${schedule.user.name + ' ' + schedule.user.lastName}">Имя Фамилия</td>
-                <!-- Week start and end dates -->
-                <td th:text="${#dates.format(schedule.weekStart, 'yyyy-MM-dd')}">Начало недели</td>
-                <td th:text="${#dates.format(schedule.weekEnd, 'yyyy-MM-dd')}">Конец недели</td>
-                <!-- Dynamically display the correct day type based on week.name -->
-                <td th:text="${schedule.week.name == 'Понедельник' ? schedule.dayType.description : ''}">Понедельник</td>
-                <td th:text="${schedule.week.name == 'Вторник' ? schedule.dayType.description : ''}">Вторник</td>
-                <td th:text="${schedule.week.name == 'Среда' ? schedule.dayType.description : ''}">Среда</td>
-                <td th:text="${schedule.week.name == 'Четверг' ? schedule.dayType.description : ''}">Четверг</td>
-                <td th:text="${schedule.week.name == 'Пятница' ? schedule.dayType.description : ''}">Пятница</td>
-                <td th:text="${schedule.week.name == 'Суббота' ? schedule.dayType.description : ''}">Суббота</td>
-                <td th:text="${schedule.week.name == 'Воскресение' ? schedule.dayType.description : ''}">Воскресение</td>
+            <tr th:each="ws : ${scheduleList}">
+                <td th:text="${ws.user.name + ' ' + ws.user.lastName}"></td>
+                <td th:text="${#dates.format(ws.weekStart, 'dd.MM.yyyy')}"></td>
+                <td th:text="${#dates.format(ws.weekEnd, 'dd.MM.yyyy')}"></td>
+                <td th:text="${ws.monday}"></td>
+                <td th:text="${ws.tuesday}"></td>
+                <td th:text="${ws.wednesday}"></td>
+                <td th:text="${ws.thursday}"></td>
+                <td th:text="${ws.friday}"></td>
+                <td th:text="${ws.saturday}"></td>
+                <td th:text="${ws.sunday}"></td>
+                <td th:text="${
+        (ws.monday == 'Рабочий день' ? 8 : 0) +
+        (ws.tuesday == 'Рабочий день' ? 8 : 0) +
+        (ws.wednesday == 'Рабочий день' ? 8 : 0) +
+        (ws.thursday == 'Рабочий день' ? 8 : 0) +
+        (ws.friday == 'Рабочий день' ? 8 : 0) +
+        (ws.saturday == 'Рабочий день' ? 8 : 0) +
+        (ws.sunday == 'Рабочий день' ? 8 : 0)
+    }"></td>
             </tr>
             </tbody>
-        </table>
-
+</table>
     </div>
 
 
-</div>
-</body>
+    </div>
 
-
-
+    </body>

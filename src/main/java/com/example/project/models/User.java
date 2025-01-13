@@ -4,6 +4,8 @@ import com.example.project.models.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,6 +16,8 @@ import java.util.Set;
 
 @Entity
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
