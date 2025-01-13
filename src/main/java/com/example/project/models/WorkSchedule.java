@@ -49,4 +49,9 @@ public class WorkSchedule {
         this.weekEnd = weekEnd;
         this.dayType = dayType;
     }
+
+    public WorkSchedule(Long userId, Date weekStart, Date weekEnd, DayType dayType) {
+    }
+
+
 }

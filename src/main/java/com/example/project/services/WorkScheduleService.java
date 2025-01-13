@@ -22,8 +22,6 @@ public class WorkScheduleService {
         return workScheduleRepository.findByUser(user);
     }
 
-    public void saveAll(List<WorkSchedule> schedules) {
-        workScheduleRepository.saveAll(schedules);
-    }
+
 
 }
