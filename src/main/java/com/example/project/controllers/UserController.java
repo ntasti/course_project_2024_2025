@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -97,6 +98,23 @@ import java.util.List;
 
         // Возвращаем имя шаблона, который будет отображать таблицу
         return "users";
+    }
+
+
+    @GetMapping("/personal/inf")//вывод данных пользователя  в личном кабинете
+    public String personal1(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String name = user.getName();
+        model.addAttribute("name", name);
+        String lastName=user.getLastName();
+        model.addAttribute("lastName",lastName);
+        String email = user.getEmail();
+        model.addAttribute("email", email);
+        String position= user.getPosition();
+        model.addAttribute("position",position);
+        LocalDateTime dateOfCreated = user.getDateOfCreated();
+        model.addAttribute("dateOfCreated", dateOfCreated);
+        return "person-inf";
     }
 
     }
