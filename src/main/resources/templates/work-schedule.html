@@ -195,6 +195,25 @@
             border-collapse: collapse;
             padding: 5px;
         }
+        .search-container {
+    position: relative;
+}
+
+.search-input {
+    height: 50px;
+    border-radius: 30px;
+    padding-left: 35px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #888;
+}
 
 
 
@@ -259,6 +278,21 @@
 
 
     <div class="block-2">
+
+
+        <h1>График работы</h1>
+
+        <center><div>
+
+            <form action="/schedule/search" method="get">
+                <input type="date" name="weekStart" class="form-control search-input" required>
+                <br>
+                <button type="submit" style="width:150px;" class="btn btn-primary">Поиск</button>
+            </form>
+
+        </div><center>
+<br>
+
         <table class="table table-bordered">
     <thead>
     <tr>

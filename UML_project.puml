@@ -1,0 +1,297 @@
+@startuml
+class com.example.project.services.CustomUserDetailsService {
+- UserRepository userRepository
++ UserDetails loadUserByUsername(String)
+}
+
+
+class com.example.project.models.StatusTask {
+- Long id
+- String name
+}
+
+class com.example.project.configurations.WebSecurityConfig {
+- CustomUserDetailsService userDetailsService
++ <<Create>> WebSecurityConfig(CustomUserDetailsService)
++ SecurityFilterChain securityFilterChain(HttpSecurity)
++ AuthenticationProvider authenticationProvider(PasswordEncoder)
++ PasswordEncoder passwordEncoder()
+}
+
+
+class com.example.project.models.Week {
+- Long id
+- String name
++ <<Create>> Week(Long,String)
++ <<Create>> Week()
+}
+
+
+class com.example.project.controllers.UserController {
+- UserService userService
++ TasksUserRepository tasksUserRepository
++ UserRepository userRepository
++ String login()
++ String registration()
++ String createUser(User)
++ String calender(Model)
++ String users(Model)
++ String searchUsers(String,String,Model)
++ String personal1(Model)
++ String tasks(Model)
+}
+
+
+interface com.example.project.repo.ProjectRepository {
+}
+class com.example.project.models.Task {
+- Long id
+- String name
+- String inf
+- String priority
+- StatusTask status
+- LocalDateTime dateOfCreated
+- Date dateOfEnd
+- Project project
++ <<Create>> Task(String,String,String,LocalDateTime,Date,Project,StatusTask)
++ <<Create>> Task()
+}
+
+
+class com.example.project.models.WorkSchedule {
+- Long id
+- User user
+- Date weekStart
+- Date weekEnd
+- DayType dayType
+- Week week
+- String monday
+- String tuesday
+- String wednesday
+- String thursday
+- String friday
+- String saturday
+- String sunday
+- int rowspan
++ <<Create>> WorkSchedule()
++ <<Create>> WorkSchedule(Long,User,Date,Date,DayType)
++ <<Create>> WorkSchedule(Long,Date,Date,DayType)
+}
+
+
+class com.example.project.controllers.WorkScheduleController {
+- UserRepository userRepository
+- DayTypeRepository dayTypeRepository
+- WorkScheduleRepository workScheduleRepository
+- WorkScheduleService workScheduleService
+- WeekRepository weekRepository
++ <<Create>> WorkScheduleController(WorkScheduleService)
++ String createWorkSchedule(Model)
++ String showSchedule(Model)
++ String saveWorkSchedule(Long,Date,Date,Long,Long,Model)
+}
+
+
+interface com.example.project.repo.DayTypeRepository {
+}
+class com.example.project.controllers.ProjectController {
+- ProjectRepository projectRepository
++ String allProjectsInf(Model)
++ String newProjectsCreate(Model)
++ String newProjects(String,String,String,String,Model)
++ String ProjectsInf(long,Model)
+}
+
+
+class com.example.project.services.DayTypeService {
+- DayTypeRepository dayTypeRepository
++ List<DayType> getAllDayTypes()
+}
+
+
+class com.example.project.controllers.MainController {
++ String mainData(Model)
+}
+
+class com.example.project.models.User {
+- Long id
+- String email
+- String position
+- String name
+- String lastName
+- boolean active
+- String password
+- Set<Role> roles
+- LocalDateTime dateOfCreated
++ <<Create>> User()
+- void init()
++ Collection<? extends GrantedAuthority> getAuthorities()
++ String getPassword()
++ String getUsername()
++ boolean isAccountNonExpired()
++ boolean isAccountNonLocked()
++ boolean isCredentialsNonExpired()
++ boolean isEnabled()
+}
+
+
+interface com.example.project.repo.WorkScheduleRepository {
+~ WorkSchedule findByUser(User)
+}
+
+interface com.example.project.repo.UserRepository {
+~ User findByEmail(String)
+~ List<User> findAllByRoles(Role)
+~ List<User> findByNameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrEmailContainingIgnoreCase(String,String,String)
+}
+
+class com.example.project.controllers.TaskController {
+- TaskRepository taskRepository
+- ProjectRepository projectRepository
++ String getTasksByProjectId(Long,Model)
++ String ProjectsInf(long,Model)
++ String task(Model)
++ String searchTasks(String,Model)
+}
+
+
+interface com.example.project.repo.WeekRepository {
+}
+class com.example.project.models.TasksUser {
+- Long id
+- User user
+- Task task
+- Date assignmentDate
+- Date DateOfTheEnd
++ <<Create>> TasksUser()
+}
+
+
+class com.example.project.controllers.AdminController {
+- AdminService adminService
++ TaskRepository taskRepository
++ ProjectRepository projectRepository
++ UserRepository userRepository
+- DayTypeRepository dayTypeRepository
+- WorkScheduleRepository workScheduleRepository
++ TasksUserRepository tasksUserRepository
++ String newUserTask(Long,Long,Long,String,String)
++ String newUserTask(Model)
++ List<Task> getTasksByProject(Long)
++ String newTask(Model)
++ String TaskCreate(Task)
++ String ReportCreate(Model)
+}
+
+
+class com.example.project.models.Project {
+- Long id
+- String name
+- String inf
+- LocalDateTime dateOfCreated
+- String customerName
+- String customerEmail
++ <<Create>> Project()
++ <<Create>> Project(String,String,String,String)
+- void init()
+}
+
+
+class com.example.project.ProjectApplication {
++ {static} void main(String[])
+}
+
+class com.example.project.services.AdminService {
+- TasksUserRepository tasksUserRepository
+- WorkScheduleRepository workScheduleRepository
+- TaskRepository taskRepository
++ void newUserTask(TasksUser)
++ void saveSchedule(WorkSchedule)
++ void createSession(Task)
+}
+
+
+class com.example.project.models.Main {
+- Long id
+- String nameData
++ Long getId()
++ void setId(Long)
++ String getNameData()
++ void setNameData(String)
+}
+
+
+class com.example.project.controllers.CalendarController {
+}
+class com.example.project.ProjectApplicationTests {
+~ void contextLoads()
+}
+
+interface com.example.project.repo.TaskRepository {
+~ List<Task> findAllByProject_IdOrderByDateOfCreatedAsc(Long)
+~ List<Task> findByNameContainingIgnoreCaseOrProject_NameContainingIgnoreCase(String,String)
+~ List<Task> findByProjectId(Long)
+}
+
+interface com.example.project.repo.MainRepository {
+}
+interface com.example.project.repo.StatusTaskRepository {
+}
+class com.example.project.services.WorkScheduleService {
+- WorkScheduleRepository workScheduleRepository
+- JdbcTemplate jdbcTemplate
++ void updateTableStructure()
++ List<WorkSchedule> getGroupedWorkSchedules()
+}
+
+
+interface com.example.project.repo.TasksUserRepository {
+~ List<TasksUser> findAllTasksByUserId(Long)
+}
+
+enum com.example.project.models.enums.Role {
++  USER
++  ADMIN
++ String getAuthority()
+}
+
+
+class com.example.project.services.UserService {
+- UserRepository userRepository
+- PasswordEncoder passwordEncoder
++ boolean createUser(User)
++ List<User> list()
++ List<User> listADMIN()
++ void banUser(Long)
+}
+
+
+class com.example.project.models.DayType {
+- Long id
+- String code
+- String description
++ <<Create>> DayType()
++ <<Create>> DayType(Long,String,String)
++ Long getId()
++ void setId(Long)
++ String getCode()
++ void setCode(String)
++ String getDescription()
++ void setDescription(String)
+}
+
+
+
+
+org.springframework.security.core.userdetails.UserDetailsService <|.. com.example.project.services.CustomUserDetailsService
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.ProjectRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.DayTypeRepository
+org.springframework.security.core.userdetails.UserDetails <|.. com.example.project.models.User
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.WorkScheduleRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.UserRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.WeekRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.TaskRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.MainRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.StatusTaskRepository
+org.springframework.data.jpa.repository.JpaRepository <|-- com.example.project.repo.TasksUserRepository
+@enduml

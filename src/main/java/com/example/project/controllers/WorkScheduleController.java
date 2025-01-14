@@ -71,29 +71,10 @@ public class WorkScheduleController {
         return "work-schedule";
     }
 
-//    //вывод данных расписания по всем сотрудникам
-//    @GetMapping("/schedule")
-//    public String getWorkSchedule(Model model) {
-//        List<User> users = userRepository.findAll();
-//        List<DayType> dayTypes = dayTypeRepository.findAll();
-//        List<Week> weeks = weekRepository.findAll();
-//        List<WorkSchedule> workSchedules = workScheduleRepository.findAll();
-//        // Добавление данных в модель
-//        model.addAttribute("weeks", weeks); // Обратите внимание на множественное число
-//        model.addAttribute("users", users);
-//        model.addAttribute("dayTypes", dayTypes);
-//        model.addAttribute("workSchedules", workSchedules);
-//
-//        return "work-schedule";
-//
-//    }
-
-
 
 
     @PostMapping("/schedule/create")
-    public String saveWorkSchedule(
-            @RequestParam Long userId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekStart, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekEnd, @RequestParam Long weekId, @RequestParam Long dayTypeId, Model model) {
+    public String saveWorkSchedule(@RequestParam Long userId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekStart, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekEnd, @RequestParam Long weekId, @RequestParam Long dayTypeId, Model model) {
         // Выполняем запрос ALTER TABLE
         workScheduleService.updateTableStructure();
 
@@ -124,7 +105,14 @@ public class WorkScheduleController {
     }
 
 
+    @GetMapping("/schedule/search")
+    public String searchSchedulesByDate(@RequestParam(value = "weekStart", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date weekStart,
+            Model model) {
+        List<WorkSchedule> scheduleList = workScheduleService.getGroupedWorkSchedulesSearch(weekStart);
 
+        model.addAttribute("scheduleList", scheduleList);
+        return "work-schedule";
+    }
 
 
 }
