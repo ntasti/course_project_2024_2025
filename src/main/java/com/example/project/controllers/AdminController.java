@@ -122,8 +122,28 @@ public class AdminController {
     @GetMapping("/session")
     public String Session(Model model) {
 
-        Iterable<UserActivity> usersActivity =userActivityRepository.findAll();
-        model.addAttribute("userActivity",usersActivity);
+        Iterable<UserActivity> usersActivity = userActivityRepository.findAll();
+        List<Map<String, Object>> userActivityWithDuration = new ArrayList<>();
+
+        for (UserActivity activity : usersActivity) {
+            Map<String, Object> activityData = new HashMap<>();
+            activityData.put("id", activity.getId());
+            activityData.put("name", activity.getName());
+            activityData.put("loginTimestamp", activity.getLoginTimestamp());
+            activityData.put("logoutTimestamp", activity.getLogoutTimestamp());
+
+            if (activity.getLoginTimestamp() != null && activity.getLogoutTimestamp() != null) {
+                long duration = java.time.Duration
+                        .between(activity.getLoginTimestamp(), activity.getLogoutTimestamp())
+                        .toMinutes();
+                activityData.put("duration", (duration/60)); // Время в минутах
+            } else {
+                activityData.put("duration", "В системе"); // Если время выхода отсутствует
+            }
+
+            userActivityWithDuration.add(activityData);
+        }
+        model.addAttribute("userActivity", userActivityWithDuration); // Передача данных в шаблон
 
         return "user-session";
     }

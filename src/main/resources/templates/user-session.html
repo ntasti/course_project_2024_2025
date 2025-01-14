@@ -279,29 +279,50 @@
     <div class="content">
         <div class="block-2">
             <h2>Посещение сайта пользователями</h2>
-            <center><table >
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>Login </th>
-                    <th>Logout </th>
-                </tr>
-                </thead>
-                <tbody th:each="userActivity : ${userActivity}">
-                <tr>
-                    <td th:text="${userActivity.id}"></td>
-                    <!-- Вместо userId отображаем имя и фамилию -->
-                    <td th:text="${userActivity.name}"></td>
-                    <td th:text="${userActivity.loginTimestamp}"></td>
-                    <td th:text="${userActivity.logoutTimestamp}"></td>
-                </tr>
-                </tbody>
-            </table></center>
+            <h6 id="average-time">Среднее время нахождения на сайте: <span id="avgDuration">--</span> часов</h6>
+            <center>
+                <table id="userActivityTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Login</th>
+                        <th>Logout</th>
+                        <th>Время на сайте (часы)</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="userActivity : ${userActivity}">
+                    <tr>
+                        <td th:text="${userActivity.id}"></td>
+                        <td th:text="${userActivity.name}"></td>
+                        <td th:text="${userActivity.loginTimestamp}"></td>
+                        <td th:text="${userActivity.logoutTimestamp}"></td>
+                        <td th:text="${userActivity.duration}" class="duration"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </center>
         </div>
-
     </div>
-</div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const durationElements = document.querySelectorAll('.duration');
+            let totalDuration = 0;
+            let count = 0;
+
+            durationElements.forEach(el => {
+                const duration = parseFloat(el.textContent);
+                if (!isNaN(duration)) {
+                    totalDuration += duration;
+                    count++;
+                }
+            });
+
+            const avgDuration = count > 0 ? (totalDuration / count).toFixed(2) : 0;
+            document.getElementById('avgDuration').textContent = avgDuration;
+        });
+    </script>
 
 
 </body>
