@@ -34,6 +34,7 @@ public class LogoutListener {
     }
 
     private Long getUserIdByUsername(String username) {
+
         // Logic to fetch user ID based on username from the database
         return 1L; // Example: replace with actual lookup
     }
