@@ -1,9 +1,11 @@
 package com.example.project.configurations;
 
+import com.example.project.models.User;
 import com.example.project.models.UserActivity;
 import com.example.project.repo.UserActivityRepository;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.event.LogoutSuccessEvent;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -21,11 +23,11 @@ public class LogoutListener {
     public void onLogoutSuccess(LogoutSuccessEvent event) {
         String username = event.getAuthentication().getName();
 
-        // Retrieve user ID (adapt based on your UserDetails implementation)
         Long userId = getUserIdByUsername(username);
+        Authentication authentication = event.getAuthentication();
+        User user = (User) authentication.getPrincipal();
 
-        // Find the latest login activity for the user
-        UserActivity activity = userActivityRepository.findTopByUserIdOrderByLoginTimestampDesc(userId);
+        UserActivity activity = userActivityRepository.findTopByUserIdOrderByLoginTimestampDesc(user.getId());
 
         if (activity != null) {
             activity.setLogoutTimestamp(LocalDateTime.now());

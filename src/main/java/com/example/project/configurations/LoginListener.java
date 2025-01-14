@@ -31,10 +31,13 @@ public class LoginListener {
     public void onAuthenticationSuccess(AuthenticationSuccessEvent event) {
         Authentication authentication = event.getAuthentication();
         String username = authentication.getName();
-
+      // Assuming username is the unique identifier
+        // Assuming username is the unique identifier
         log.info(username);
-        Long userId = getUserIdByUsername(username);
+        // Retrieve user ID (adapt based on your UserDetails implementation)
+//        Long userId = getUserIdByUsername(username);
         User user = (User) authentication.getPrincipal();
+//        Long id_user = user.getId();
 
         UserActivity activity = new UserActivity();
         activity.setUserId(user.getId());
@@ -42,11 +45,13 @@ public class LoginListener {
         activity.setLoginTimestamp(LocalDateTime.now());
 
         userActivityRepository.save(activity);
+//        log.info(" Login Вызван");
     }
 
 
 
     private Long getUserIdByUsername(String username) {
+        // Logic to fetch user ID based on username from the database
         return 1L; // Example: replace with actual lookup
     }
 
