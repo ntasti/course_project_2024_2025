@@ -148,6 +148,21 @@ public class AdminController {
         return "user-session";
     }
 
+    @GetMapping("/delete")
+    public String deleteInf(Model model) {
+        Iterable<Task> tasks = taskRepository.findAll();
+        model.addAttribute("task", tasks);
+
+
+        return "delete-task";
+    }
+
+    @PostMapping("/delete")
+    public String deleteData(@RequestParam Long id) {
+        adminService.deleteTask(id);
+        return "redirect:/task";
+    }
+
 
 
 }
