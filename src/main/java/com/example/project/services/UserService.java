@@ -1,13 +1,19 @@
 package com.example.project.services;
 
 
+import com.example.project.models.TasksUser;
 import com.example.project.models.User;
 import com.example.project.models.enums.Role;
+import com.example.project.repo.TasksUserRepository;
 import com.example.project.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -64,10 +70,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    private final TicketsRepository ticketsRepository;
-//    public void createUserTickets(Tickets tickets){
-//        log.info("Билет сохранен в 'Мои билеты'");
-//        ticketsRepository.save(tickets);
+
+
     }
 
 

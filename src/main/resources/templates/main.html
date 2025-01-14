@@ -1,17 +1,8 @@
-<!--<!DOCTYPE HTML>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1 >Текст</h1>-->
-<!--</body>-->
-<!--</html>-->
+
 
 
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -135,10 +126,18 @@
 
 
     <div class="block-2">
-        <h1>Контент</h1>
+        <div class="card w-50"  th:each="task : ${tasks}">
+            <div class="card-body">
+                <h5  th:text="${task.task.project.name}" class="card-title">Заголовок карточки</h5>
+                <p  th:text="${task.task.name}"class="card-text"></p>
+                <p th:text="'Статус:'+ ${task.task.status.name}">
+                    <button  class="btn animated-button btn-primary" style="vertical-align: inherit; border-radius: 10px; text-align:center;
+                    transition: all 0.3s ease-in-out; width: 150px; height: 50px; font-size: 20px;">Подробнее</button>
+            </div>
+        </div>
     </div>
-</div>
 
+</div>
 
 <!-- FOOTER -->
 <div th:insert="~{blocks/footer :: footer}"></div>

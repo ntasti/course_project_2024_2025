@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -116,6 +117,17 @@ import java.util.List;
         model.addAttribute("dateOfCreated", dateOfCreated);
         return "person-inf";
     }
+
+
+    @GetMapping("/") // вывод фильтрованных задач по каждому юзеру
+    public String tasks(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id_user = user.getId();
+        List<TasksUser> tasks = tasksUserRepository.findAllTasksByUserId(id_user);
+        model.addAttribute("tasks", tasks);
+        return "main";
+    }
+
 
     }
 
