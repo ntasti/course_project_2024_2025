@@ -229,36 +229,37 @@
 
 
            <center> <form th:action="@{/registration}" method="post">
-                <div style="width: 300px;">
-                    <h5 class="h5 mb-3 fw-normal" style="color: black;">Регистрация пользователя</h5>
-                    <input  style="border-color:black" type="text" name="name" class="form-control"
+
+                    <h3  style="color: black;">Регистрация пользователя</h3>
+               <br>
+                    <input  style="border-color:#e5e5e5 ;  width: 300px"; type="text" name="name" class="form-control"
                            placeholder="Имя"><input type="hidden" name="_csrf" value="${_csrf.token}">
 
                     <br>
-                    <input style="border-color:black" type="text" name="lastName" class="form-control"
+                    <input style="border-color:#e5e5e5;  width: 300px;"  type="text" name="lastName" class="form-control"
                            placeholder="Фамилия"><input type="hidden" name="_csrf" value="${_csrf.token}">
 
                     <br>
-                    <input  style="border-color:black" type="email" name="email" class="form-control"
+                    <input  style="border-color:#e5e5e5; width: 300px;" type="email" name="email" class="form-control"
                            placeholder="name@example.com"><input type="hidden" name="_csrf" value="${_csrf.token}">
 
                     <br>
-                    <input style="border-color:black" type="text" name="position" class="form-control"
+                    <input style="border-color:#e5e5e5; width: 300px;" type="text" name="position" class="form-control"
                            placeholder="должность"><input type="hidden" name="_csrf" value="${_csrf.token}">
 
                     <br>
-                    <input  style="border-color:black"type="password" name="password" class="form-control"
+                    <input  style="border-color:#e5e5e5; width: 300px;"type="password" name="password" class="form-control"
                            placeholder="Пароль"><input type="hidden" name="_csrf" value="${_csrf.token}">
 
                     <br>
                     <div>
-                        <center><button type="submit" class="btn btn-outline-warning">
-                            <font class="lead" style="vertical-warning: inherit;width:200px">Зарегистрировать</font>
-                            <input type="hidden" name="_csrf" value="${_csrf.token} ">
-                        </button></center>
+                        <center><p>
+                            <button type="submit" class="btn animated-button" style="vertical-align: inherit; border-radius: 10px; text-align:center;
+                    transition: all 0.3s ease-in-out; width: 350px; height: 50px; font-size: 20px;">Добавить</button>
+                        </p></center>
 
                     </div>
-                </div>
+
             </form>
 
         </center>
