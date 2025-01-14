@@ -6,6 +6,8 @@ import com.example.project.services.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Controller
@@ -114,6 +114,18 @@ public class AdminController {
        Iterable<TasksUser> tasksUsers=tasksUserRepository.findAll();
         model.addAttribute("tasksUser",tasksUsers);
         return "data-reports";
+    }
+
+
+    @Autowired
+    UserActivityRepository userActivityRepository;
+    @GetMapping("/session")
+    public String Session(Model model) {
+
+        Iterable<UserActivity> usersActivity =userActivityRepository.findAll();
+        model.addAttribute("userActivity",usersActivity);
+
+        return "user-session";
     }
 
 

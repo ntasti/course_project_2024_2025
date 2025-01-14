@@ -26,5 +26,8 @@ public class UserActivity {
 
     private LocalDateTime logoutTimestamp;
 
+
+    private String name;
+//    private String userLastName;
     // Getters and Setters
 }

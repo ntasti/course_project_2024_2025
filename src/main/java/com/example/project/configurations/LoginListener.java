@@ -31,18 +31,18 @@ public class LoginListener {
     public void onAuthenticationSuccess(AuthenticationSuccessEvent event) {
         Authentication authentication = event.getAuthentication();
         String username = authentication.getName();
-      // Assuming username is the unique identifier
-        // Assuming username is the unique identifier
+
         log.info(username);
-        // Retrieve user ID (adapt based on your UserDetails implementation)
-//        Long userId = getUserIdByUsername(username);
+
         User user = (User) authentication.getPrincipal();
 //        Long id_user = user.getId();
 
+        Long userId= user.getId();
         UserActivity activity = new UserActivity();
-        activity.setUserId(user.getId());
+        activity.setUserId(userId);
 
         activity.setLoginTimestamp(LocalDateTime.now());
+        activity.setName(username);
 
         userActivityRepository.save(activity);
 //        log.info(" Login Вызван");
