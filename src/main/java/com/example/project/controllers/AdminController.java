@@ -107,4 +107,15 @@ public class AdminController {
     }
 
 
+    @Autowired
+    public TasksUserRepository tasksUserRepository;
+    @GetMapping("/data/reports")
+    public String ReportCreate(Model model) {
+       Iterable<TasksUser> tasksUsers=tasksUserRepository.findAll();
+        model.addAttribute("tasksUser",tasksUsers);
+        return "data-reports";
+    }
+
+
+
 }
