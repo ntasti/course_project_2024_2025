@@ -150,16 +150,21 @@ public class AdminController {
 
     @GetMapping("/delete")
     public String deleteInf(Model model) {
-        Iterable<Task> tasks = taskRepository.findAll();
-        model.addAttribute("task", tasks);
-
-
+        Iterable<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
         return "delete-task";
+    }
+
+
+    @GetMapping("/tasks/by-user/{userId}")
+    @ResponseBody
+    public List<TasksUser> getTasksByUser(@PathVariable Long userId) {
+        return tasksUserRepository.findAllTasksByUserId(userId); // Метод в репозитории
     }
 
     @PostMapping("/delete")
     public String deleteData(@RequestParam Long id) {
-        adminService.deleteTask(id);
+        adminService.deleteUserTask(id);
         return "redirect:/task";
     }
 

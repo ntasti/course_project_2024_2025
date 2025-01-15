@@ -35,10 +35,10 @@ public class AdminService {
         taskRepository.save(task);
     }
 
-    public void deleteTask(Long id) {
+    public void deleteUserTask(Long id) {
 
         log.info("Delete Task");
-        taskRepository.deleteById(id);
+        tasksUserRepository.deleteById(id);
     }
 
 }

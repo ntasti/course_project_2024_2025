@@ -9,4 +9,6 @@ import java.util.List;
 public interface TasksUserRepository extends JpaRepository<TasksUser,Long> {
     List<TasksUser> findAllTasksByUserId(@Param("user_id") Long user);
 
+
 }
+

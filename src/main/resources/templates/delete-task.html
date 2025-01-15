@@ -6,7 +6,180 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
+
 <body>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+<title>Добавление нового проекта</title>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+    .navbar {
+        margin: 0;
+        padding: 0;
+    }
+    .container-fluid {
+        margin: 0;
+        padding: 0;
+    }
+    .content {
+display: flex;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: stretch;
+width: 100%;
+
+    .block-1{
+      width: 350px;
+      padding: 0px;
+height: 700px;
+
+background-color: #dcdcde;
+margin-top:39px;
+text-align: center;
+box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2); /* Тень вправо на блок 2 */
+line-height: 20px;
+position: relative; /* Устанавливаем для работы z-index */
+z-index: 2; /* Помещаем блок выше */
+
+    }
+
+    .block-2 {
+      flex: 1; /* Этот блок займет оставшееся место */
+       background-color: white; /* Пример цвета для блока */
+
+       height: 700px;
+        text-align: center;
+        padding: 70px; /* Добавляем отступы для содержания */
+       overflow: auto; /* Скроллинг, если контент превышает высоту */L
+    }
+
+        .block-3{
+        margin-top:10px;
+         background-color: #dcdcde; /* Пример цвета для блока */
+         box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+        width: 750px;
+        height: 250px;
+        text-align: center;
+        border-radius:10px;
+        }
+
+    .animated-button:hover {
+background-color:  #0c2636;
+color:white;
+
+}
+    .btn{
+background-color: #dcdcde; /* Основной цвет кнопки */
+color: black; /* Цвет текста */
+border: 0;
+width: 350px;
+height: 50px;
+font-size: 20px;
+border-radius: 0;
+    }
+
+     .border {
+   width: 700px;
+   height: 55px;
+background-color:#f7f2f2;
+    }
+
+    .btn-outline-secondary{
+   background-color:#0c2636;
+   transition:background #b8a33d;
+    }
+
+    .button{
+     display: flex;
+      margin: 0 auto;
+    }
+
+.table {
+    width: 100%; /* Таблица занимает всю ширину */
+    border-collapse: collapse; /* Убираем границы между ячейками */
+    padding: 10px; /* Внутренний отступ */
+}
+
+.table td {
+    padding: 10px; /* Внутренние отступы для ячеек */
+}
+
+.table tr:not(:last-child) td {
+    border-bottom: 1px solid #ccc; /* Лёгкая разделительная линия между строками */
+}
+
+.table tr:last-child td {
+    border-bottom: none; /* Убираем границу у последней строки */
+}
+
+.tbl {
+    border: none; /* Убираем границы таблицы */
+}
+
+</style>
+
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}"></header>
+
+
+<!--боковое меню-->
+<div class="content">
+
+    <div class="block-1">
+        <ul class="list-group">
+
+            <div class="block-inf">
+
+                <img src=" https://static.vecteezy.com/system/resources/thumbnails/039/191/209/small_2x/ai-generated-blurred-interior-of-modern-office-blur-background-business-concept-free-photo.jpeg" style=" width: 350px;
+         height: 130px;">
+            </div>
+
+            <p>
+                <a href="/projects" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Проекты</a>
+            </p>
+
+            <p>
+                <a href="/task" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Задачи</a>
+            </p>
+
+            <p>
+                <a href="/users" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Сотрудники</a>
+            </p>
+
+            <p>
+                <a href="/personal/inf" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Личная информация</a>
+            </p>
+
+            <p>
+                <a href="/data/reports" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; margin-left:0px;">Отчёты</a>
+            </p>
+
+
+            <p>
+                <a href="/" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; ">Настройки</a>
+            </p>
+
+            <p>
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+                <button type="submit" class="btn" style="background-color: #0c2636; color: white;text-align: left;">
+                    Выйти
+                </button>
+            </form>
+            </p>
+
+            <div>
+        </ul>
+    </div>
+
+
+    <div class="block-2">
 
 <center><h1>Удаление задачи</h1></center>
 <br>
@@ -15,27 +188,55 @@
         <form action="/delete" method="post">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 
-            <!-- Список проектов -->
             <div class="mb-3">
-                <label for="projectId" class="form-label">Выберите задачу:</label>
-                <select style="width: 450px;" id="id" name="id" class="form-control" required>
-                    <option value="" disabled selected>Выберите проект</option>
-                    <option th:each="task : ${task}" th:value="${task.id}" th:text="${task.project.name}+'-'+ ${task.name}"></option>
+                <label for="userId" class="form-label">Выберите пользователя:</label>
+                <select style="width: 450px;" id="userId" class="form-control" required>
+                    <option value="" disabled selected>Выберите пользователя</option>
+                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name} + ' ' + ${user.lastName}"></option>
                 </select>
             </div>
 
-            <!-- Список задач -->
+            <div class="mb-3">
+                <label for="taskId" class="form-label">Выберите задачу:</label>
+                <select style="width: 450px;" id="taskId" name="id" class="form-control" required>
+                    <option value="" disabled selected>Сначала выберите пользователя</option>
+                </select>
+            </div>
 
             <br>
-            <button type="submit" class="btn btn-outline-success">
+            <button type="submit" class="btn animated-button" style="border-radius: 10px; text-align: center;
+                                    transition: all 0.3s ease-in-out; width: 350px; height: 50px; font-size: 20px;">
                 Удалить задачу
             </button>
         </form>
     </div>
 </center>
+    </div>
+</div>
+
+            <script>
+                // Загрузка задач при выборе пользователя
+                $('#userId').change(function () {
+                    const userId = $(this).val();
+                    $('#taskId').html('<option value="" disabled selected>Загрузка задач...</option>');
+
+                    $.ajax({
+                        url: '/tasks/by-user/' + userId,
+                        method: 'GET',
+                        success: function (tasks) {
+                            let options = '<option value="" disabled selected>Выберите задачу</option>';
+                            tasks.forEach(task => {
+                                options += `<option value="${task.id}">${task.task.name}</option>`;
+                            });
+                            $('#taskId').html(options);
+                        },
+                        error: function () {
+                            $('#taskId').html('<option value="" disabled>Ошибка загрузки задач</option>');
+                        }
+                    });
+                });
+            </script>
 
 
-
-</script>
 </body>
 </html>

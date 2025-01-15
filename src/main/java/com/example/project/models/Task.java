@@ -25,8 +25,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name ="status_id" ,referencedColumnName = "id")
     private  StatusTask status;
-//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "task")
-//     private List<TasksUser> tasksUsers=new ArrayList<>();
+
     private LocalDateTime dateOfCreated;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
      private Date dateOfEnd;
