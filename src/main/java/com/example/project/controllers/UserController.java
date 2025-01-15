@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -34,17 +35,17 @@ import java.util.List;
             return "main-login";
         }
 
-        @GetMapping("/registration")
-        public String registration() {
-            return "registration";
-        }
-
-
-    @PostMapping("/registration")
-    public String createUser(User user) {
-        userService.createUser(user);
-        return "redirect:/login";
-    }
+//        @GetMapping("/registration")
+//        public String registration() {
+//            return "registration";
+//        }
+//
+//
+//    @PostMapping("/registration")
+//    public String createUser(User user) {
+//        userService.createUser(user);
+//        return "redirect:/login";
+//    }
     @Autowired
     public TasksUserRepository tasksUserRepository;
 
@@ -123,7 +124,13 @@ import java.util.List;
     public String tasks(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long id_user = user.getId();
+        Optional<User> users = userRepository.findById(id_user);
+
+        model.addAttribute("user",users);
+
         List<TasksUser> tasks = tasksUserRepository.findAllTasksByUserId(id_user);
+
+        model.addAttribute("tasks", tasks);
         model.addAttribute("tasks", tasks);
         return "main";
     }

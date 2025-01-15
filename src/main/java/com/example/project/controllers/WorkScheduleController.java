@@ -39,20 +39,20 @@ public class WorkScheduleController {
     private WeekRepository weekRepository;
 
 
-    @GetMapping("/schedule/create")
-    public String createWorkSchedule(Model model) {
-
-        Iterable<User> users = userRepository.findAll();
-        Iterable<DayType> dayTypes = dayTypeRepository.findAll();
-        Iterable<Week> week = weekRepository.findAll();
-        Iterable<WorkSchedule> workSchedule = workScheduleRepository.findAll();
-        model.addAttribute("weeks", week);
-        model.addAttribute("users", users);
-        model.addAttribute("dayTypes", dayTypes);
-        model.addAttribute("workSchedule", workSchedule);
-
-        return "schedule-create"; //
-    }
+//    @GetMapping("/schedule/create")
+//    public String createWorkSchedule(Model model) {
+//
+//        Iterable<User> users = userRepository.findAll();
+//        Iterable<DayType> dayTypes = dayTypeRepository.findAll();
+//        Iterable<Week> week = weekRepository.findAll();
+//        Iterable<WorkSchedule> workSchedule = workScheduleRepository.findAll();
+//        model.addAttribute("weeks", week);
+//        model.addAttribute("users", users);
+//        model.addAttribute("dayTypes", dayTypes);
+//        model.addAttribute("workSchedule", workSchedule);
+//
+//        return "schedule-create"; //
+//    }
 
 
 
@@ -72,37 +72,37 @@ public class WorkScheduleController {
     }
 
 
-
-    @PostMapping("/schedule/create")
-    public String saveWorkSchedule(@RequestParam Long userId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekStart, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekEnd, @RequestParam Long weekId, @RequestParam Long dayTypeId, Model model) {
-        // Выполняем запрос ALTER TABLE
-        workScheduleService.updateTableStructure();
-
-        // 1) Ищем user
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // 2) Ищем нужную запись Week
-        Week week = weekRepository.findById(weekId)
-                .orElseThrow(() -> new RuntimeException("Week not found with ID = " + weekId));
-
-        // 3) Ищем нужную запись DayType
-        DayType dayType = dayTypeRepository.findById(dayTypeId)
-                .orElseThrow(() -> new RuntimeException("DayType not found with ID = " + dayTypeId));
-
-        // 4) Создаём WorkSchedule
-        WorkSchedule newSchedule = new WorkSchedule();
-        newSchedule.setUser(user);
-        newSchedule.setWeekStart(weekStart);
-        newSchedule.setWeekEnd(weekEnd);
-        newSchedule.setWeek(week);
-        newSchedule.setDayType(dayType);
-
-        // 5) Сохраняем
-        workScheduleRepository.save(newSchedule);
-
-        return "redirect:/schedule"; // или куда вам нужно
-    }
+//
+//    @PostMapping("/schedule/create")
+//    public String saveWorkSchedule(@RequestParam Long userId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekStart, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekEnd, @RequestParam Long weekId, @RequestParam Long dayTypeId, Model model) {
+//        // Выполняем запрос ALTER TABLE
+//        workScheduleService.updateTableStructure();
+//
+//        // 1) Ищем user
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // 2) Ищем нужную запись Week
+//        Week week = weekRepository.findById(weekId)
+//                .orElseThrow(() -> new RuntimeException("Week not found with ID = " + weekId));
+//
+//        // 3) Ищем нужную запись DayType
+//        DayType dayType = dayTypeRepository.findById(dayTypeId)
+//                .orElseThrow(() -> new RuntimeException("DayType not found with ID = " + dayTypeId));
+//
+//        // 4) Создаём WorkSchedule
+//        WorkSchedule newSchedule = new WorkSchedule();
+//        newSchedule.setUser(user);
+//        newSchedule.setWeekStart(weekStart);
+//        newSchedule.setWeekEnd(weekEnd);
+//        newSchedule.setWeek(week);
+//        newSchedule.setDayType(dayType);
+//
+//        // 5) Сохраняем
+//        workScheduleRepository.save(newSchedule);
+//
+//        return "redirect:/schedule"; // или куда вам нужно
+//    }
 
 
     @GetMapping("/schedule/search")

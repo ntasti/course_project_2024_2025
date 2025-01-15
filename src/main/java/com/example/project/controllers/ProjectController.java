@@ -25,20 +25,20 @@ public class ProjectController {
         return "projects";
     }
 
-    //добавление информации
-    @GetMapping("/project/create")
-    public String newProjectsCreate(Model model){
-        return "project-create";
-    }
-
-
-    @PostMapping("/project/create")
-    public String newProjects(@RequestParam String name,@RequestParam String inf,@RequestParam String customerName,@RequestParam String customerEmail, Model model){
-      Project project;
-        project = new Project(name, inf, customerName,customerEmail);
-        projectRepository.save(project);//сохранение объекта в бд
-        return "redirect:/projects";
-    }
+//    //добавление информации
+//    @GetMapping("/project/create")
+//    public String newProjectsCreate(Model model){
+//        return "project-create";
+//    }
+//
+//
+//    @PostMapping("/project/create")
+//    public String newProjects(@RequestParam String name,@RequestParam String inf,@RequestParam String customerName,@RequestParam String customerEmail, Model model){
+//      Project project;
+//        project = new Project(name, inf, customerName,customerEmail);
+//        projectRepository.save(project);//сохранение объекта в бд
+//        return "redirect:/projects";
+//    }
 
     //вывод по опрделенному Id
     @GetMapping("/project/inf/{id}")

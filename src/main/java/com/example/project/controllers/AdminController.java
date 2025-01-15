@@ -3,8 +3,11 @@ package com.example.project.controllers;
 import com.example.project.models.*;
 import com.example.project.repo.*;
 import com.example.project.services.AdminService;
+import com.example.project.services.UserService;
+import com.example.project.services.WorkScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -78,6 +81,7 @@ public class AdminController {
         // Возвращаем имя шаблона
         return "usertasks-create";
     }
+
     @GetMapping("/tasks/by-project")
     @ResponseBody
     public List<Task> getTasksByProject(@RequestParam Long projectId) {
@@ -109,16 +113,18 @@ public class AdminController {
 
     @Autowired
     public TasksUserRepository tasksUserRepository;
+
     @GetMapping("/data/reports")
     public String ReportCreate(Model model) {
-       Iterable<TasksUser> tasksUsers=tasksUserRepository.findAll();
-        model.addAttribute("tasksUser",tasksUsers);
+        Iterable<TasksUser> tasksUsers = tasksUserRepository.findAll();
+        model.addAttribute("tasksUser", tasksUsers);
         return "data-reports";
     }
 
 
     @Autowired
     UserActivityRepository userActivityRepository;
+
     @GetMapping("/session")
     public String Session(Model model) {
 
@@ -136,7 +142,7 @@ public class AdminController {
                 long duration = java.time.Duration
                         .between(activity.getLoginTimestamp(), activity.getLogoutTimestamp())
                         .toMinutes();
-                activityData.put("duration", (duration/60)); // Время в минутах
+                activityData.put("duration", (duration / 60)); // Время в минутах
             } else {
                 activityData.put("duration", "В системе"); // Если время выхода отсутствует
             }
@@ -168,6 +174,85 @@ public class AdminController {
         return "redirect:/task";
     }
 
+
+    //добавление информации
+    @GetMapping("/project/create")
+    public String newProjectsCreate(Model model) {
+        return "project-create";
+    }
+
+
+    @PostMapping("/project/create")
+    public String newProjects(@RequestParam String name, @RequestParam String inf, @RequestParam String customerName, @RequestParam String customerEmail, Model model) {
+        Project project;
+        project = new Project(name, inf, customerName, customerEmail);
+        projectRepository.save(project);//сохранение объекта в бд
+        return "redirect:/projects";
+    }
+
+
+    @GetMapping("/registration")
+    public String registration() {
+        return "registration";
+    }
+
+    private final UserService userService;
+
+    @PostMapping("/registration")
+    public String createUser(User user) {
+        userService.createUser(user);
+        return "redirect:/login";
+    }
+
+    @Autowired
+    private final WeekRepository weekRepository;
+
+    @GetMapping("/schedule/create")
+    public String createWorkSchedule(Model model) {
+
+        Iterable<User> users = userRepository.findAll();
+        Iterable<DayType> dayTypes = dayTypeRepository.findAll();
+        Iterable<Week> week = weekRepository.findAll();
+        Iterable<WorkSchedule> workSchedule = workScheduleRepository.findAll();
+        model.addAttribute("weeks", week);
+        model.addAttribute("users", users);
+        model.addAttribute("dayTypes", dayTypes);
+        model.addAttribute("workSchedule", workSchedule);
+
+        return "schedule-create"; //
+    }
+
+private final WorkScheduleService workScheduleService;
+    @PostMapping("/schedule/create")
+    public String saveWorkSchedule(@RequestParam Long userId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekStart, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date weekEnd, @RequestParam Long weekId, @RequestParam Long dayTypeId, Model model) {
+        // Выполняем запрос ALTER TABLE
+        workScheduleService.updateTableStructure();
+
+        // 1) Ищем user
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 2) Ищем нужную запись Week
+        Week week = weekRepository.findById(weekId)
+                .orElseThrow(() -> new RuntimeException("Week not found with ID = " + weekId));
+
+        // 3) Ищем нужную запись DayType
+        DayType dayType = dayTypeRepository.findById(dayTypeId)
+                .orElseThrow(() -> new RuntimeException("DayType not found with ID = " + dayTypeId));
+
+        // 4) Создаём WorkSchedule
+        WorkSchedule newSchedule = new WorkSchedule();
+        newSchedule.setUser(user);
+        newSchedule.setWeekStart(weekStart);
+        newSchedule.setWeekEnd(weekEnd);
+        newSchedule.setWeek(week);
+        newSchedule.setDayType(dayType);
+
+        // 5) Сохраняем
+        workScheduleRepository.save(newSchedule);
+
+        return "redirect:/schedule"; // или куда вам нужно
+    }
 
 
 }

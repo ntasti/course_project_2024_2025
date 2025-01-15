@@ -6,9 +6,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface TasksUserRepository extends JpaRepository<TasksUser,Long> {
+public interface TasksUserRepository extends JpaRepository<TasksUser, Long> {
     List<TasksUser> findAllTasksByUserId(@Param("user_id") Long user);
 
-
+//    List<TasksUser> sortAllTasksByUserProjectId(@Param("project_id") Long project);
 }
 
