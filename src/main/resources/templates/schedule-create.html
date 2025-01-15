@@ -114,14 +114,20 @@
 
 </head>
 <body>
-<header th:insert="~{blocks/header :: header}"></header>
-
+<header th:if="${role == 'USER'}" th:insert="~{blocks/header :: header}"></header>
+<header th:if="${role == 'ADMIN'}" th:insert="~{blocks/header-admin :: header-admin}"></header>
 <div class="content">
 
     <div class="block-1">
 
 
         <ul class="list-group">
+
+            <div class="block-inf">
+
+                <img src=" https://static.vecteezy.com/system/resources/thumbnails/039/191/209/small_2x/ai-generated-blurred-interior-of-modern-office-blur-background-business-concept-free-photo.jpeg" style=" width: 350px;
+         height: 130px;">
+            </div>
 
             <p>
                 <a href="/projects" class=" btn  animated-button " style="vertical-align: inherit; text-align: left; "><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="currentColor" class="bi bi-folder" viewBox="0 0 17 17">
@@ -160,7 +166,7 @@
             </p>
 
 
-            <p>
+            <p th:if="${role == 'ADMIN'}">
             <form th:action="@{/logout}" method="post">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
                 <button type="submit" class="btn" style="background-color: #0c2636; color: white;text-align: left;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">

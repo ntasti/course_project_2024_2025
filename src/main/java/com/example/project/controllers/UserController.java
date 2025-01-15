@@ -1,6 +1,6 @@
 package com.example.project.controllers;
 
-import com.example.project.models.Task;
+import org.springframework.security.core.GrantedAuthority;
 import com.example.project.models.TasksUser;
 import com.example.project.models.User;
 import com.example.project.repo.TasksUserRepository;
@@ -9,14 +9,12 @@ import com.example.project.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,28 +22,19 @@ import java.util.Optional;
 
 
 @Controller
-    @RequiredArgsConstructor
-    public class UserController {
-        private final UserService userService;
-        @Autowired
+@RequiredArgsConstructor
+public class UserController {
+    private final UserService userService;
+
+    @Autowired
 //        private TicketsViewRepository ticketsViewRepository;
 
-        @GetMapping("/login")
-        public String login() {
-            return "main-login";
-        }
+    @GetMapping("/login")
+    public String login() {
+        return "main-login";
+    }
 
-//        @GetMapping("/registration")
-//        public String registration() {
-//            return "registration";
-//        }
-//
-//
-//    @PostMapping("/registration")
-//    public String createUser(User user) {
-//        userService.createUser(user);
-//        return "redirect:/login";
-//    }
+
     @Autowired
     public TasksUserRepository tasksUserRepository;
 
@@ -62,16 +51,17 @@ import java.util.Optional;
 
     @Autowired
     public UserRepository userRepository;
+
     @GetMapping("/users")
-    public String users( Model model){
-        Iterable<User> users= userRepository.findAll();//вытягивание всех строк из таблицы
-        model.addAttribute("users",users);
+    public String users(Model model) {
+        Iterable<User> users = userRepository.findAll();//вытягивание всех строк из таблицы
+        model.addAttribute("users", users);
         return "users";
     }
 
 
     @GetMapping("/users/search")
-    public String searchUsers(@RequestParam(value = "query", required = false) String query,@RequestParam(value = "sort", required = false, defaultValue = "name") String sort, Model model) {
+    public String searchUsers(@RequestParam(value = "query", required = false) String query, @RequestParam(value = "sort", required = false, defaultValue = "name") String sort, Model model) {
         List<User> users;
         // Проверяем, если поисковый запрос не пустой
         if (query != null && !query.isEmpty()) {
@@ -108,12 +98,12 @@ import java.util.Optional;
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String name = user.getName();
         model.addAttribute("name", name);
-        String lastName=user.getLastName();
-        model.addAttribute("lastName",lastName);
+        String lastName = user.getLastName();
+        model.addAttribute("lastName", lastName);
         String email = user.getEmail();
         model.addAttribute("email", email);
-        String position= user.getPosition();
-        model.addAttribute("position",position);
+        String position = user.getPosition();
+        model.addAttribute("position", position);
         LocalDateTime dateOfCreated = user.getDateOfCreated();
         model.addAttribute("dateOfCreated", dateOfCreated);
         return "person-inf";
@@ -126,7 +116,7 @@ import java.util.Optional;
         Long id_user = user.getId();
         Optional<User> users = userRepository.findById(id_user);
 
-        model.addAttribute("user",users);
+        model.addAttribute("user", users);
 
         List<TasksUser> tasks = tasksUserRepository.findAllTasksByUserId(id_user);
 
@@ -136,7 +126,20 @@ import java.util.Optional;
     }
 
 
+    @ModelAttribute("role")
+    public String addUserRole(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Получение роли пользователя
+            return authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .findFirst()
+                    .orElse("USER"); // Значение по умолчанию
+        }
+        return "USER"; // Если пользователь не аутентифицирован
     }
+
+
+}
 
 
 

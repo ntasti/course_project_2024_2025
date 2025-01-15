@@ -10,10 +10,13 @@ import com.example.project.services.WorkScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,20 +42,17 @@ public class WorkScheduleController {
     private WeekRepository weekRepository;
 
 
-//    @GetMapping("/schedule/create")
-//    public String createWorkSchedule(Model model) {
-//
-//        Iterable<User> users = userRepository.findAll();
-//        Iterable<DayType> dayTypes = dayTypeRepository.findAll();
-//        Iterable<Week> week = weekRepository.findAll();
-//        Iterable<WorkSchedule> workSchedule = workScheduleRepository.findAll();
-//        model.addAttribute("weeks", week);
-//        model.addAttribute("users", users);
-//        model.addAttribute("dayTypes", dayTypes);
-//        model.addAttribute("workSchedule", workSchedule);
-//
-//        return "schedule-create"; //
-//    }
+    @ModelAttribute("role")
+    public String addUserRole(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Получение роли пользователя
+            return authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .findFirst()
+                    .orElse("USER"); // Значение по умолчанию
+        }
+        return "USER"; // Если пользователь не аутентифицирован
+    }
 
 
 

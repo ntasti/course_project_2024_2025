@@ -172,8 +172,8 @@
 
 </head>
 <body>
-<header th:insert="~{blocks/header :: header}"></header>
-
+<header th:if="${role == 'USER'}" th:insert="~{blocks/header :: header}"></header>
+<header th:if="${role == 'ADMIN'}" th:insert="~{blocks/header-admin :: header-admin}"></header>
 <div class="content">
 
     <div class="block-1">
@@ -222,7 +222,7 @@
             </p>
 
 
-            <p>
+            <p th:if="${role == 'ADMIN'}">
             <form th:action="@{/logout}" method="post">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
                 <button type="submit" class="btn" style="background-color: #0c2636; color: white;text-align: left;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-left" viewBox="0 0 16 16">

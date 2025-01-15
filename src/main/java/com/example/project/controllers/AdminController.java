@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,18 @@ public class AdminController {
     public ProjectRepository projectRepository;
     @Autowired
     public UserRepository userRepository;
+
+    @ModelAttribute("role")
+    public String addUserRole(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Получение роли пользователя
+            return authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .findFirst()
+                    .orElse("USER"); // Значение по умолчанию
+        }
+        return "USER"; // Если пользователь не аутентифицирован
+    }
 
     @PostMapping("/usertasks/create")
     public String newUserTask(@RequestParam Long projectId, @RequestParam Long taskId,

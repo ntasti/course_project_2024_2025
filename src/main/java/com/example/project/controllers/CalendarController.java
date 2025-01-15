@@ -11,12 +11,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CalendarController {
 
-//    public TasksUserRepository tasksUserRepository;
-//    @PostMapping("/tasks/usercreate")
-//    public String newProjects(@RequestParam String name, @RequestParam String inf, @RequestParam String customerName, @RequestParam String customerEmail, Model model){
-//        Project project;
-//        project = new Project(name, inf, customerName,customerEmail);
-//        projectRepository.save(project);//сохранение объекта в бд
-//        return "redirect:/projects";
-//    }
+
 }

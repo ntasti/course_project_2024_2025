@@ -3,18 +3,30 @@ package com.example.project.controllers;
 import com.example.project.models.Project;
 import com.example.project.repo.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
 public class ProjectController {
+
+    @ModelAttribute("role")
+    public String addUserRole(Authentication authentication) {
+        if (authentication != null && authentication.isAuthenticated()) {
+            // Получение роли пользователя
+            return authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .findFirst()
+                    .orElse("USER"); // Значение по умолчанию
+        }
+        return "USER"; // Если пользователь не аутентифицирован
+    }
+
     @Autowired
     private ProjectRepository projectRepository;
     //общая информация
