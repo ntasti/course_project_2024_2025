@@ -102,7 +102,7 @@ public class AdminController {
 
     @PostMapping("/task/create")
     public String TaskCreate(Task task) {
-        adminService.createSession(task);
+        adminService.createTask(task);
         return "redirect:/task";
     }
 

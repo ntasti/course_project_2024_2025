@@ -29,7 +29,7 @@ public class AdminService {
     }
 
     private final TaskRepository taskRepository;
-    public void createSession(Task task){
+    public void createTask(Task task){
         log.info("Create new Task {} ",task);
 
         taskRepository.save(task);

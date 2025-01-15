@@ -175,55 +175,61 @@ background-color:#f7f2f2;
 
 
     <div class="block-2">
-
-
-        <div th:each="el: ${taskInf}">
-            <h2  th:text="'Информация по задаче №' + ${el.id}"></h2>
-            <table  class="table tbl" style="border-radius:10%;">
+        <h2 th:text="'Информация по задаче №' + ${task.id}"></h2>
+        <form method="post" th:action="@{/task/inf/{id}/edit(id=${task.id})}">
+            <table class="table tbl" style="border-radius:10%;">
                 <tr>
                     <td>Название проекта:</td>
-                    <td th:text="${el.project.name}"></td>
+                    <td th:text="${task.project?.name ?: 'Без проекта'}"></td>
                 </tr>
                 <tr>
                     <td>Номер задачи в базе данных:</td>
-                    <td th:text="${el.id}"></td>
+                    <td th:text="${task.id}"></td>
                 </tr>
-
                 <tr>
                     <td>Название задачи:</td>
-                    <td th:text="${el.name}"></td>
+                    <td th:text="${task.name}"></td>
                 </tr>
                 <tr>
                     <td>Дата создания:</td>
-                    <td th:text="${el.dateOfCreated}"></td>
+                    <td th:text="${task.dateOfCreated}"></td>
                 </tr>
                 <tr>
                     <td>Дата завершения:</td>
-                    <td th:text="${el.dateOfEnd}"></td>
+                    <td th:text="${task.dateOfEnd}"></td>
                 </tr>
                 <tr>
-                    <td>Приорететность:</td>
-                    <td th:text="${el.priority}"></td>
+                    <td>Приоритет:</td>
+                    <td th:text="${task.priority ?: 'Не указан'}"></td>
                 </tr>
                 <tr>
                     <td>Информация:</td>
-                    <td th:text="${el.inf}"></td>
+                    <td th:text="${task.inf ?: 'Нет информации'}"></td>
                 </tr>
                 <tr>
                     <td>Статус:</td>
-                    <td th:text="${el.status.name}"></td>
+                    <td>
+                       <center> <select style="width: 350px;" id="statusId" name="statusId" class="form-control" required>
+                            <option th:each="status : ${statuses}"
+                                    th:value="${status.id}"
+                                    th:text="${status.name}"
+                                    th:selected="${status.id == task.status?.id}">
+                            </option>
+                        </select><center>
+                    </td>
                 </tr>
-
             </table>
-                <center>
-            <a  th:href="@{'/task/inf/' + ${el.id}+ '/edit'}" class="btn animated-button" style="border-radius: 10px; width: 350px; height: 50px; font-size: 20px;">
-                Изменить статус
-            </a>
+            <p>
+            <center>
+                <button type="submit"  class="btn animated-button" style="border-radius: 10px; width: 350px; height: 50px; font-size: 20px;">
+                    Готово
+                </button>
+            </center>
+            </p>
+        </form>
+    </div>
 
-</center>
-        </div>
-    </div>
-    </div>
+
 </div>
 
 
